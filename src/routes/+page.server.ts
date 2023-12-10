@@ -11,7 +11,7 @@ export const load = async ({ fetch, url }) => {
 	return {
 		articles: search({
 			data,
-			fields: ['title'],
+			fields: ['title', 'description'],
 			term: searchTerm
 		})
 	};

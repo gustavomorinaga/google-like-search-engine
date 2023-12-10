@@ -83,7 +83,7 @@ export const search = <T = Array<any>>({
 		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');
 
 		const result = clonedData.filter((item) => {
-			const fieldsToMatch = fields.map((field) => item[field]).join('\n');
+			const fieldsToMatch = fields.map((field) => item[field]).join(' ');
 
 			const isExactMatch = exactRegex.test(fieldsToMatch);
 			const isPartialMatch = partialRegex.test(fieldsToMatch);
