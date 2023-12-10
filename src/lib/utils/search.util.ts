@@ -22,9 +22,9 @@ type TSearchProps<T> = {
 
 /**
  * Regular expression used for searching keywords in a search engine.
- * Matches words, phrases enclosed in double quotes, and optional plus/minus signs.
+ * Matches words, phrases enclosed in double quotes, optional plus/minus signs and include special characters.
  */
-const SEARCH_KEYWORDS_REGEX = /("[^"]+"|\+?\w+(-\w+)*|-?\w+)(?=\s|$)/g;
+const SEARCH_KEYWORDS_REGEX = /(?:"[^"]*"|[^\s"]+)(?=\s*|\s*$)/g;
 
 /**
  * Extracts search keywords from a given string.
@@ -79,7 +79,8 @@ export const search = <T = Array<any>>({
 
 		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
-		const normalRegex = new RegExp(normal.map((k) => `(?=.*${k})`).join(' '), 'gi');
+		// normalRegex must be a positive lookahead for each keyword and ignore speacial characters
+		const normalRegex = new RegExp(`(?=.*${normal.join(')(?=.*')})`, 'gi');
 		const exactRegex = new RegExp(exact.map((k) => `(?=.*\\b${k}\\b)`).join('|'), 'gi');
 		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');
 		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');

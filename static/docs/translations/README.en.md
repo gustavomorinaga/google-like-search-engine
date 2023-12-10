@@ -3,7 +3,7 @@
 🔍 Simple implementation of a Google-like search engine using [TypeScript](https://www.typescriptlang.org/) and [SvelteKit](https://kit.svelte.dev/).
 
 <p align="left">
-  <a href="./LICENSE" title="Show the MIT License">
+  <a href="/LICENSE" title="Show the MIT License">
     <img src="https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge" alt="License MIT">
   </a>
   <a href="https://kit.svelte.dev" title="Open SvelteKit Website">
@@ -19,8 +19,8 @@
 
 ## 🌎 Translations
 
-<kbd>[<img title="English" alt="English" src="https://flagicons.lipis.dev/flags/4x3/us.svg" width="22">](./static/docs/translations/README.en.md)</kbd>
-<kbd>[<img title="Português Brasileiro" alt="Português Brasileiro" src="https://flagicons.lipis.dev/flags/4x3/br.svg" width="22">](./static/docs/translations/README.pt.md)</kbd>
+<kbd>[<img title="English" alt="English" src="https://flagicons.lipis.dev/flags/4x3/us.svg" width="22">](/static/docs/translations/README.en.md)</kbd>
+<kbd>[<img title="Português Brasileiro" alt="Português Brasileiro" src="https://flagicons.lipis.dev/flags/4x3/br.svg" width="22">](/static/docs/translations/README.pt.md)</kbd>
 
 ## Introduction
 
@@ -50,7 +50,7 @@ Cases that the search engine must be able to handle:
 
 ## 📜 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) page for details.
+This project is licensed under the **MIT License** - see the [LICENSE](/LICENSE) page for details.
 
 <p align="center">
  ❤️ Thanks for your attention!

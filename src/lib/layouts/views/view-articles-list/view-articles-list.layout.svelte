@@ -15,7 +15,7 @@
 	const searchDebounce = debounce(async (term: string) => {
 		loading = true;
 
-		await goto(`?search=${encodeURIComponent(term)}`);
+		await goto(term ? `?search=${encodeURIComponent(term)}` : '/');
 		await invalidateAll().finally(() => (loading = false));
 	}, DEBOUNCE_SEARCH_TIME);
 
