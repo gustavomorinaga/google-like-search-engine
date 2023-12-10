@@ -1,5 +1,7 @@
 [
 	{
+		"id": 1,
+		"slug": "typescript-tips-and-tricks",
 		"title": "TypeScript Tips and Tricks",
 		"description": "A collection of TypeScript tips and tricks",
 		"author": "John Doe",
@@ -8,6 +10,8 @@
 		"content": "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. Any browser. Any host. Any OS. Open source."
 	},
 	{
+		"id": 2,
+		"slug": "mongodb-tips-and-tricks",
 		"title": "MongoDB Tips and Tricks",
 		"description": "A collection of MongoDB tips and tricks",
 		"author": "John Doe",
@@ -16,6 +20,8 @@
 		"content": "MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era."
 	},
 	{
+		"id": 3,
+		"slug": "sveltekit-tips-and-tricks",
 		"title": "SvelteKit Tips and Tricks",
 		"description": "A collection of SvelteKit tips and tricks",
 		"author": "John Doe",
@@ -24,6 +30,8 @@
 		"content": "SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing."
 	},
 	{
+		"id": 4,
+		"slug": "how-to-use-promise-allsettled",
 		"title": "How to Use: Promise.allSettled",
 		"description": "A guide on how to use Promise.allSettled",
 		"author": "John Doe",
@@ -32,6 +40,8 @@
 		"content": "Promise.allSettled is a new Promise static method that returns a promise that resolves after all of the given promises have either fulfilled or rejected, with an array of objects that each describes the outcome of each promise."
 	},
 	{
+		"id": 5,
+		"slug": "reasons-why-programming-is-incredible",
 		"title": "Reasons Why Programming is Incredible",
 		"description": "A list of reasons why programming is incredible",
 		"author": "John Doe",
@@ -40,6 +50,8 @@
 		"content": "Programming is incredible because it allows you to create anything you can imagine."
 	},
 	{
+		"id": 6,
+		"slug": "how-to-use-array-prototype-map",
 		"title": "How to Use: Array.prototype.map",
 		"description": "A guide on how to use Array.prototype.map",
 		"author": "John Doe",
@@ -48,6 +60,8 @@
 		"content": "The map() method creates a new array populated with the results of calling a provided function on every element in the calling array."
 	},
 	{
+		"id": 7,
+		"slug": "how-to-use-array-prototype-filter",
 		"title": "How to Use: Array.prototype.filter",
 		"description": "A guide on how to use Array.prototype.filter",
 		"author": "John Doe",
@@ -56,6 +70,8 @@
 		"content": "The filter() method creates a new array with all elements that pass the test implemented by the provided function."
 	},
 	{
+		"id": 8,
+		"slug": "how-to-use-array-prototype-reduce",
 		"title": "How to Use: Array.prototype.reduce",
 		"description": "A guide on how to use Array.prototype.reduce",
 		"author": "John Doe",
@@ -64,6 +80,8 @@
 		"content": "The reduce() method executes a reducer function (that you provide) on each element of the array, resulting in a single output value."
 	},
 	{
+		"id": 9,
+		"slug": "how-to-use-array-prototype-foreach",
 		"title": "How to Use: Array.prototype.forEach",
 		"description": "A guide on how to use Array.prototype.forEach",
 		"author": "John Doe",
@@ -72,6 +90,8 @@
 		"content": "The forEach() method executes a provided function once for each array element."
 	},
 	{
+		"id": 10,
+		"slug": "how-to-use-array-prototype-every",
 		"title": "How to Use: Array.prototype.every",
 		"description": "A guide on how to use Array.prototype.every",
 		"author": "John Doe",

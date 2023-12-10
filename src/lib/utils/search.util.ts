@@ -16,7 +16,7 @@ type TSearchKeywords = {
 type TSearchProps<T> = {
 	data: Array<T>;
 	fields: Array<keyof T>;
-	term: string;
+	term?: string | null;
 };
 
 /**
@@ -30,7 +30,9 @@ const SEARCH_KEYWORDS_REGEX = /("[^"]+"|\+?\w+(-\w+)*|-?\w+)(?=\s|$)/g;
  * @param value - The string to extract search keywords from.
  * @returns An object containing categorized search keywords.
  */
-export const getSearchKeywords = (value: string = ''): TSearchKeywords => {
+export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
+	if (!value) return { exact: [], partial: [], exclude: [] };
+
 	const matchedRaw = value.matchAll(SEARCH_KEYWORDS_REGEX);
 	const matchedValues = Array.from(matchedRaw).map(([keyword]) => keyword);
 
