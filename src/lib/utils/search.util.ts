@@ -61,39 +61,40 @@ export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
  * @param {TSearchProps<T>} options - The search options.
  * @returns {Array<T>} The filtered array of data items that match the search criteria.
  */
-export const search = <T = Array<any>>({ data, fields, term }: TSearchProps<T>): Array<T> => {
-	const { exact, partial, exclude } = getSearchKeywords(term);
+export const search = <T = Array<any>>({
+	data,
+	fields,
+	term
+}: TSearchProps<T>): Promise<Array<T>> =>
+	new Promise((resolve) => {
+		const { exact, partial, exclude } = getSearchKeywords(term);
 
-	const hasExact = exact.length > 0;
-	const hasPartial = partial.length > 0;
-	const hasExclude = exclude.length > 0;
+		const hasExact = exact.length > 0;
+		const hasPartial = partial.length > 0;
+		const hasExclude = exclude.length > 0;
 
-	if (!hasExact && !hasPartial && !hasExclude) return data;
+		// clone the data to avoid mutating the original data
+		const clonedData = structuredClone(data);
 
-	/**
-	 * Regular expression used for exact matching.
-	 */
-	const exactRegex = new RegExp(exact.join('|'), 'i');
+		if (!hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
-	/**
-	 * Regular expression used for partial matching.
-	 */
-	const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join(''), 'i');
+		const exactRegex = new RegExp(exact.map((k) => `(?=.*\\b${k}\\b)`).join('|'), 'gi');
+		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');
+		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');
 
-	/**
-	 * Regular expression used to exclude specific keywords from the search.
-	 */
-	const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join(''), 'i');
+		const result = clonedData.filter((item) => {
+			const fieldsToMatch = fields.map((field) => item[field]).join('\n');
 
-	const result = data.filter((item) => {
-		const currentField = fields.map((field) => item[field]).join(' ');
+			const isExactMatch = exactRegex.test(fieldsToMatch);
+			const isPartialMatch = partialRegex.test(fieldsToMatch);
+			const isExcludedMatch = excludeRegex.test(fieldsToMatch);
 
-		const isExactMatch = hasExact && exactRegex.test(currentField);
-		const isPartialMatch = hasPartial && partialRegex.test(currentField);
-		const isExcluded = hasExclude && excludeRegex.test(currentField);
+			if (hasExact && !isExactMatch) return false;
+			if (hasPartial && !isPartialMatch) return false;
+			if (hasExclude && isExcludedMatch) return false;
 
-		return (isExactMatch || isPartialMatch) && !isExcluded;
+			return true;
+		});
+
+		return resolve(result);
 	});
-
-	return result;
-};

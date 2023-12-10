@@ -1,14 +1,15 @@
 <script lang="ts">
+	import { goto, invalidateAll } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { Input } from '$lib/components/ui/input';
 	import { CardArticle } from '$lib/layouts';
 	import { debounce } from '$lib/utils';
 	import type { TArticle } from '$lib/ts';
-	import { goto, invalidateAll } from '$app/navigation';
 
 	const DEBOUNCE_SEARCH_TIME = 700;
 
 	export let articles: Array<TArticle>;
-	let searchTerm = '';
+	let searchTerm = $page.url.searchParams.get('search') ?? '';
 
 	const searchDebounce = debounce(async (term: string) => {
 		await goto(`?search=${encodeURIComponent(term)}`);
@@ -25,16 +26,16 @@
 	</header>
 
 	<Input
-		bind:value={searchTerm}
 		type="text"
 		class="mb-8"
 		placeholder="🔍 Type to search a article..."
 		autofocus
+		bind:value={searchTerm}
 		on:input={handleSearch}
 	/>
 
 	<ul>
-		{#each articles as article}
+		{#each articles as article (article.id)}
 			<li>
 				<a href="/{article.slug}">
 					<CardArticle {article} />

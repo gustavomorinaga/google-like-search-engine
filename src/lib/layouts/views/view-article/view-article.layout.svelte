@@ -25,11 +25,11 @@
 			@apply mb-4;
 
 			& > h1 {
-				@apply text-4xl font-bold;
+				@apply mb-4 text-4xl font-bold;
 			}
 
 			& > p {
-				@apply text-muted-foreground;
+				@apply mb-8 text-muted-foreground;
 			}
 		}
 	}

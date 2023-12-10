@@ -5,8 +5,8 @@
 		"title": "TypeScript Tips and Tricks",
 		"description": "A collection of TypeScript tips and tricks",
 		"author": "John Doe",
-		"created": "2019-01-01",
-		"updated": "2019-01-01",
+		"createdAt": "2019-01-01",
+		"updatedAt": "2019-01-01",
 		"content": "TypeScript is a typed superset of JavaScript that compiles to plain JavaScript. Any browser. Any host. Any OS. Open source."
 	},
 	{
@@ -15,8 +15,8 @@
 		"title": "MongoDB Tips and Tricks",
 		"description": "A collection of MongoDB tips and tricks",
 		"author": "John Doe",
-		"created": "2019-01-03",
-		"updated": "2019-01-03",
+		"createdAt": "2019-01-03",
+		"updatedAt": "2019-01-03",
 		"content": "MongoDB is a general purpose, document-based, distributed database built for modern application developers and for the cloud era."
 	},
 	{
@@ -25,8 +25,8 @@
 		"title": "SvelteKit Tips and Tricks",
 		"description": "A collection of SvelteKit tips and tricks",
 		"author": "John Doe",
-		"created": "2019-01-05",
-		"updated": "2019-01-05",
+		"createdAt": "2019-01-05",
+		"updatedAt": "2019-01-05",
 		"content": "SvelteKit is a framework for building web applications of all sizes, with a beautiful development experience and flexible filesystem-based routing."
 	},
 	{
@@ -35,8 +35,8 @@
 		"title": "How to Use: Promise.allSettled",
 		"description": "A guide on how to use Promise.allSettled",
 		"author": "John Doe",
-		"created": "2019-01-07",
-		"updated": "2019-01-07",
+		"createdAt": "2019-01-07",
+		"updatedAt": "2019-01-07",
 		"content": "Promise.allSettled is a new Promise static method that returns a promise that resolves after all of the given promises have either fulfilled or rejected, with an array of objects that each describes the outcome of each promise."
 	},
 	{
@@ -45,8 +45,8 @@
 		"title": "Reasons Why Programming is Incredible",
 		"description": "A list of reasons why programming is incredible",
 		"author": "John Doe",
-		"created": "2019-01-09",
-		"updated": "2019-01-09",
+		"createdAt": "2019-01-09",
+		"updatedAt": "2019-01-09",
 		"content": "Programming is incredible because it allows you to create anything you can imagine."
 	},
 	{
@@ -55,8 +55,8 @@
 		"title": "How to Use: Array.prototype.map",
 		"description": "A guide on how to use Array.prototype.map",
 		"author": "John Doe",
-		"created": "2019-01-11",
-		"updated": "2019-01-11",
+		"createdAt": "2019-01-11",
+		"updatedAt": "2019-01-11",
 		"content": "The map() method creates a new array populated with the results of calling a provided function on every element in the calling array."
 	},
 	{
@@ -65,8 +65,8 @@
 		"title": "How to Use: Array.prototype.filter",
 		"description": "A guide on how to use Array.prototype.filter",
 		"author": "John Doe",
-		"created": "2019-01-13",
-		"updated": "2019-01-13",
+		"createdAt": "2019-01-13",
+		"updatedAt": "2019-01-13",
 		"content": "The filter() method creates a new array with all elements that pass the test implemented by the provided function."
 	},
 	{
@@ -75,8 +75,8 @@
 		"title": "How to Use: Array.prototype.reduce",
 		"description": "A guide on how to use Array.prototype.reduce",
 		"author": "John Doe",
-		"created": "2019-01-15",
-		"updated": "2019-01-15",
+		"createdAt": "2019-01-15",
+		"updatedAt": "2019-01-15",
 		"content": "The reduce() method executes a reducer function (that you provide) on each element of the array, resulting in a single output value."
 	},
 	{
@@ -85,8 +85,8 @@
 		"title": "How to Use: Array.prototype.forEach",
 		"description": "A guide on how to use Array.prototype.forEach",
 		"author": "John Doe",
-		"created": "2019-01-17",
-		"updated": "2019-01-17",
+		"createdAt": "2019-01-17",
+		"updatedAt": "2019-01-17",
 		"content": "The forEach() method executes a provided function once for each array element."
 	},
 	{
@@ -95,8 +95,8 @@
 		"title": "How to Use: Array.prototype.every",
 		"description": "A guide on how to use Array.prototype.every",
 		"author": "John Doe",
-		"created": "2019-01-19",
-		"updated": "2019-01-19",
+		"createdAt": "2019-01-19",
+		"updatedAt": "2019-01-19",
 		"content": "The every() method tests whether all elements in the array pass the test implemented by the provided function."
 	}
 ]
