@@ -7,7 +7,10 @@
 </script>
 
 <article>
-	<Button size="sm" variant="ghost" class="mb-8" href="/">← Back to articles</Button>
+	<Button size="sm" variant="ghost" class="mb-8" href="/">
+		<span class="text-lg mr-2">⭠</span>
+		Back to articles
+	</Button>
 
 	<header>
 		<h1>{title}</h1>
