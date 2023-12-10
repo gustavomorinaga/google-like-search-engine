@@ -17,7 +17,7 @@
 	const searchDebounce = debounce(async (term: string) => {
 		loading = true;
 
-		const searchParams = new URLSearchParams({ search: encodeURIComponent(term) });
+		const searchParams = new URLSearchParams({ search: term });
 		const url = '/' + (term && `?${searchParams.toString()}`);
 
 		await goto(url).finally(() => (loading = false));

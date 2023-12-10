@@ -79,7 +79,6 @@ export const search = <T = Array<any>>({
 
 		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
-		// normalRegex must be a positive lookahead for each keyword and ignore speacial characters
 		const normalRegex = new RegExp(`(?=.*${normal.join(')(?=.*')})`, 'gi');
 		const exactRegex = new RegExp(exact.map((k) => `(?=.*\\b${k}\\b)`).join('|'), 'gi');
 		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');

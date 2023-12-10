@@ -5,6 +5,9 @@
 
 	export let article: TArticle;
 	const { cover, title, description, author, createdAt, updatedAt, content } = article;
+
+	const formattedCreatedAt = new Date(createdAt).toLocaleDateString();
+	const formattedUpdatedAt = new Date(updatedAt).toLocaleDateString();
 </script>
 
 <article>
@@ -24,9 +27,9 @@
 		<div class="info">
 			<span>By {author}</span>
 			<Separator orientation="vertical" class="h-6" />
-			<span>Published at {createdAt}</span>
+			<span>Published at {formattedCreatedAt}</span>
 			<Separator orientation="vertical" class="h-6" />
-			<span>Updated at {updatedAt}</span>
+			<span>Updated at {formattedUpdatedAt}</span>
 		</div>
 	</header>
 

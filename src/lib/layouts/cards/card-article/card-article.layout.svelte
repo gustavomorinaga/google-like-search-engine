@@ -4,6 +4,7 @@
 
 	export let article: TArticle;
 	$: ({ title, description, createdAt } = article);
+	$: formattedCreatedAt = new Date(createdAt).toLocaleDateString();
 </script>
 
 <Card.Root class="hover:border-primary transition-colors group">
@@ -14,7 +15,7 @@
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<span>{new Date(createdAt).toLocaleDateString()}</span>
+			<span>{formattedCreatedAt}</span>
 			<span
 				class="text-lg ml-auto text-primary -translate-x-4 group-hover:translate-x-0 transition opacity-0 group-hover:opacity-100 -mt-2"
 			>
