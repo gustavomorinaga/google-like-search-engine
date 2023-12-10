@@ -1,8 +1,10 @@
 <script>
 	import '../app.pcss';
-	import { Wrapper } from '$lib/layouts';
+	import { Wrapper, Footer } from '$lib/layouts';
 </script>
 
 <Wrapper>
 	<slot />
 </Wrapper>
+
+<Footer />

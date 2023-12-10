@@ -6,8 +6,11 @@
 </script>
 
 <svelte:head>
-	<title>Articles</title>
-	<meta name="description" content="A list of articles" />
+	<title>Google-like Search Engine</title>
+	<meta
+		name="description"
+		content="Simple implementation of a Google-like search engine using TypeScript and SvelteKit"
+	/>
 </svelte:head>
 
 <ViewArticlesList {articles} {elapsedTime} />

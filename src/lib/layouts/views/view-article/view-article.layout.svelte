@@ -26,7 +26,7 @@
 		</div>
 	</header>
 
-	<p>{content}</p>
+	<span>{@html content}</span>
 </article>
 
 <style lang="postcss">
@@ -47,6 +47,11 @@
 			& > div.info {
 				@apply inline-flex items-center gap-2;
 			}
+		}
+
+		& > span {
+			@apply block max-h-[50dvh] overflow-auto scroll-smooth
+			will-change-scroll scrollbar-thin scrollbar-thumb-secondary;
 		}
 	}
 </style>
