@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
+	import { Separator } from '$lib/components/ui/separator';
 	import type { TArticle } from '$lib/ts';
 
 	export let article: TArticle;
-	const { title, description, content } = article;
+	const { title, description, author, createdAt, updatedAt, content } = article;
 </script>
 
 <article>
@@ -15,6 +16,14 @@
 	<header>
 		<h1>{title}</h1>
 		<p>{description}</p>
+
+		<div class="info">
+			<span>By {author}</span>
+			<Separator orientation="vertical" class="h-6" />
+			<span>Published at {createdAt}</span>
+			<Separator orientation="vertical" class="h-6" />
+			<span>Updated at {updatedAt}</span>
+		</div>
 	</header>
 
 	<p>{content}</p>
@@ -25,14 +34,18 @@
 		@apply mt-[10dvh] block h-full;
 
 		& > header {
-			@apply mb-4;
+			@apply mb-8;
 
 			& > h1 {
 				@apply mb-4 text-4xl font-bold;
 			}
 
 			& > p {
-				@apply mb-8 text-muted-foreground;
+				@apply mb-4 text-2xl text-muted-foreground;
+			}
+
+			& > div.info {
+				@apply inline-flex items-center gap-2;
 			}
 		}
 	}

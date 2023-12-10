@@ -191,7 +191,7 @@
 	},
 	{
 		"id": 20,
-		"slug": "Angular Tips and Tricks",
+		"slug": "angular-tips-and-tricks",
 		"title": "Angular Tips and Tricks",
 		"description": "A collection of Angular tips and tricks",
 		"author": "John Doe",
@@ -201,7 +201,7 @@
 	},
 	{
 		"id": 21,
-		"slug": "React Tips and Tricks",
+		"slug": "react-tips-and-tricks",
 		"title": "React Tips and Tricks",
 		"description": "A collection of React tips and tricks",
 		"author": "John Doe",
@@ -211,7 +211,7 @@
 	},
 	{
 		"id": 22,
-		"slug": "Vue Tips and Tricks",
+		"slug": "svelte-tips-and-tricks",
 		"title": "Vue Tips and Tricks",
 		"description": "A collection of Vue tips and tricks",
 		"author": "John Doe",
@@ -221,7 +221,7 @@
 	},
 	{
 		"id": 24,
-		"slug": "Next.js Tips and Tricks",
+		"slug": "nextjs-tips-and-tricks",
 		"title": "Next.js Tips and Tricks",
 		"description": "A collection of Next.js tips and tricks",
 		"author": "John Doe",
@@ -231,7 +231,7 @@
 	},
 	{
 		"id": 25,
-		"slug": "Nuxt.js Tips and Tricks",
+		"slug": "nuxtjs-tips-and-tricks",
 		"title": "Nuxt.js Tips and Tricks",
 		"description": "A collection of Nuxt.js tips and tricks",
 		"author": "John Doe",
