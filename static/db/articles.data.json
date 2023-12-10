@@ -98,5 +98,145 @@
 		"createdAt": "2019-01-19",
 		"updatedAt": "2019-01-19",
 		"content": "The every() method tests whether all elements in the array pass the test implemented by the provided function."
+	},
+	{
+		"id": 11,
+		"slug": "how-to-use-array-prototype-some",
+		"title": "How to Use: Array.prototype.some",
+		"description": "A guide on how to use Array.prototype.some",
+		"author": "John Doe",
+		"createdAt": "2019-01-21",
+		"updatedAt": "2019-01-21",
+		"content": "The some() method tests whether at least one element in the array passes the test implemented by the provided function."
+	},
+	{
+		"id": 12,
+		"slug": "how-to-use-array-prototype-find",
+		"title": "How to Use: Array.prototype.find",
+		"description": "A guide on how to use Array.prototype.find",
+		"author": "John Doe",
+		"createdAt": "2019-01-23",
+		"updatedAt": "2019-01-23",
+		"content": "The find() method returns the value of the first element in the provided array that satisfies the provided testing function."
+	},
+	{
+		"id": 13,
+		"slug": "how-to-use-array-prototype-findindex",
+		"title": "How to Use: Array.prototype.findIndex",
+		"description": "A guide on how to use Array.prototype.findIndex",
+		"author": "John Doe",
+		"createdAt": "2019-01-25",
+		"updatedAt": "2019-01-25",
+		"content": "The findIndex() method returns the index of the first element in the array that satisfies the provided testing function. Otherwise, it returns -1, indicating that no element passed the test."
+	},
+	{
+		"id": 14,
+		"slug": "how-to-use-array-prototype-includes",
+		"title": "How to Use: Array.prototype.includes",
+		"description": "A guide on how to use Array.prototype.includes",
+		"author": "John Doe",
+		"createdAt": "2019-01-27",
+		"updatedAt": "2019-01-27",
+		"content": "The includes() method determines whether an array includes a certain value among its entries, returning true or false as appropriate."
+	},
+	{
+		"id": 15,
+		"slug": "how-to-use-array-prototype-reverse",
+		"title": "How to Use: Array.prototype.reverse",
+		"description": "A guide on how to use Array.prototype.reverse",
+		"author": "John Doe",
+		"createdAt": "2019-01-29",
+		"updatedAt": "2019-01-29",
+		"content": "The reverse() method reverses an array in place. The first array element becomes the last, and the last array element becomes the first."
+	},
+	{
+		"id": 16,
+		"slug": "how-to-use-array-prototype-sort",
+		"title": "How to Use: Array.prototype.sort",
+		"description": "A guide on how to use Array.prototype.sort",
+		"author": "John Doe",
+		"createdAt": "2019-01-31",
+		"updatedAt": "2019-01-31",
+		"content": "The sort() method sorts the elements of an array in place and returns the sorted array. The default sort order is ascending, built upon converting the elements into strings, then comparing their sequences of UTF-16 code units values."
+	},
+	{
+		"id": 17,
+		"slug": "how-to-use-array-prototype-flat",
+		"title": "How to Use: Array.prototype.flat",
+		"description": "A guide on how to use Array.prototype.flat",
+		"author": "John Doe",
+		"createdAt": "2019-02-02",
+		"updatedAt": "2019-02-02",
+		"content": "The flat() method creates a new array with all sub-array elements concatenated into it recursively up to the specified depth."
+	},
+	{
+		"id": 18,
+		"slug": "how-to-use-array-prototype-flatmap",
+		"title": "How to Use: Array.prototype.flatMap",
+		"description": "A guide on how to use Array.prototype.flatMap",
+		"author": "John Doe",
+		"createdAt": "2019-02-04",
+		"updatedAt": "2019-02-04",
+		"content": "The flatMap() method first maps each element using a mapping function, then flattens the result into a new array. It is identical to a map() followed by a flat() of depth 1, but flatMap() is often quite useful, as merging both into one method is slightly more efficient."
+	},
+	{
+		"id": 19,
+		"slug": "how-to-use-array-prototype-keys",
+		"title": "How to Use: Array.prototype.keys",
+		"description": "A guide on how to use Array.prototype.keys",
+		"author": "John Doe",
+		"createdAt": "2019-02-06",
+		"updatedAt": "2019-02-06",
+		"content": "The keys() method returns a new Array Iterator object that contains the keys for each index in the array."
+	},
+	{
+		"id": 20,
+		"slug": "Angular Tips and Tricks",
+		"title": "Angular Tips and Tricks",
+		"description": "A collection of Angular tips and tricks",
+		"author": "John Doe",
+		"createdAt": "2019-02-08",
+		"updatedAt": "2019-02-08",
+		"content": "Angular is a platform for building mobile and desktop web applications."
+	},
+	{
+		"id": 21,
+		"slug": "React Tips and Tricks",
+		"title": "React Tips and Tricks",
+		"description": "A collection of React tips and tricks",
+		"author": "John Doe",
+		"createdAt": "2019-02-10",
+		"updatedAt": "2019-02-10",
+		"content": "React is a JavaScript library for building user interfaces."
+	},
+	{
+		"id": 22,
+		"slug": "Vue Tips and Tricks",
+		"title": "Vue Tips and Tricks",
+		"description": "A collection of Vue tips and tricks",
+		"author": "John Doe",
+		"createdAt": "2019-02-12",
+		"updatedAt": "2019-02-12",
+		"content": "Vue is a progressive framework for building user interfaces."
+	},
+	{
+		"id": 24,
+		"slug": "Next.js Tips and Tricks",
+		"title": "Next.js Tips and Tricks",
+		"description": "A collection of Next.js tips and tricks",
+		"author": "John Doe",
+		"createdAt": "2019-02-16",
+		"updatedAt": "2019-02-16",
+		"content": "Next.js is a framework for building server-side rendered and statically generated React applications using React."
+	},
+	{
+		"id": 25,
+		"slug": "Nuxt.js Tips and Tricks",
+		"title": "Nuxt.js Tips and Tricks",
+		"description": "A collection of Nuxt.js tips and tricks",
+		"author": "John Doe",
+		"createdAt": "2019-02-18",
+		"updatedAt": "2019-02-18",
+		"content": "Nuxt.js is a framework for building server side rendered and statically generated Vue.js applications using Vue.js."
 	}
 ]
