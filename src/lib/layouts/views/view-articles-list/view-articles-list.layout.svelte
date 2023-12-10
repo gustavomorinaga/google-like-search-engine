@@ -12,11 +12,15 @@
 	let searchTerm = $page.url.searchParams.get('search') ?? '';
 	let loading = false;
 
+	$: elapsedTimeSeconds = elapsedTime / 1000;
+
 	const searchDebounce = debounce(async (term: string) => {
 		loading = true;
 
-		await goto(term ? `?search=${encodeURIComponent(term)}` : '/');
-		await invalidateAll().finally(() => (loading = false));
+		const searchParams = new URLSearchParams({ search: encodeURIComponent(term) });
+		const url = '/' + (term && `?${searchParams.toString()}`);
+
+		await goto(url).finally(() => (loading = false));
 	}, DEBOUNCE_SEARCH_TIME);
 
 	const handleSearch = async () => await searchDebounce(searchTerm);
@@ -43,7 +47,7 @@
 
 	<div class="benchmarks">
 		<span>Approximately {articles.length} results</span>
-		<span>({elapsedTime.toFixed(3)} seconds)</span>
+		<span>({elapsedTimeSeconds.toFixed(3)} seconds)</span>
 	</div>
 
 	<ListArticles {articles} />

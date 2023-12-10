@@ -26,7 +26,7 @@ export const load = async ({ fetch, url }) => {
 
 	const articles = await search({
 		data,
-		fields: ['title', 'description'],
+		fields: ['title', 'description', 'content'],
 		term: searchTerm
 	}).finally(() => {
 		endPerformance(performanceMarkNames.end);
