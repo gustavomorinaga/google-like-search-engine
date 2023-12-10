@@ -4,6 +4,7 @@
  * Represents the search keywords for a search engine.
  */
 type TSearchKeywords = {
+	normal: Array<string>;
 	exact: Array<string>;
 	partial: Array<string>;
 	exclude: Array<string>;
@@ -31,27 +32,26 @@ const SEARCH_KEYWORDS_REGEX = /("[^"]+"|\+?\w+(-\w+)*|-?\w+)(?=\s|$)/g;
  * @returns An object containing categorized search keywords.
  */
 export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
-	if (!value) return { exact: [], partial: [], exclude: [] };
+	const initialValue: TSearchKeywords = { normal: [], exact: [], partial: [], exclude: [] };
+
+	if (!value) return initialValue;
 
 	const matchedRaw = value.matchAll(SEARCH_KEYWORDS_REGEX);
 	const matchedValues = Array.from(matchedRaw).map(([keyword]) => keyword);
 
-	return matchedValues.reduce<TSearchKeywords>(
-		(acc, keyword) => {
-			const isExact = keyword.startsWith('"') && keyword.endsWith('"');
-			const isPartial = keyword.startsWith('+');
-			const isExclude = keyword.startsWith('-');
-			const isNormal = !isExact && !isPartial && !isExclude;
+	return matchedValues.reduce<TSearchKeywords>((acc, keyword) => {
+		const isExact = keyword.startsWith('"') && keyword.endsWith('"');
+		const isPartial = keyword.startsWith('+');
+		const isExclude = keyword.startsWith('-');
+		const isNormal = !isExact && !isPartial && !isExclude;
 
-			if (isExact) acc.exact.push(keyword.slice(1, -1));
-			if (isPartial) acc.partial.push(keyword.slice(1));
-			if (isNormal) acc.partial.push(keyword);
-			if (isExclude) acc.exclude.push(keyword.slice(1));
+		if (isExact) acc.exact.push(keyword.slice(1, -1));
+		if (isPartial) acc.partial.push(keyword.slice(1));
+		if (isExclude) acc.exclude.push(keyword.slice(1));
+		if (isNormal) acc.normal.push(keyword);
 
-			return acc;
-		},
-		{ exact: [], partial: [], exclude: [] }
-	);
+		return acc;
+	}, initialValue);
 };
 
 /**
@@ -67,8 +67,9 @@ export const search = <T = Array<any>>({
 	term
 }: TSearchProps<T>): Promise<Array<T>> =>
 	new Promise((resolve) => {
-		const { exact, partial, exclude } = getSearchKeywords(term);
+		const { normal, exact, partial, exclude } = getSearchKeywords(term);
 
+		const hasNormal = normal.length > 0;
 		const hasExact = exact.length > 0;
 		const hasPartial = partial.length > 0;
 		const hasExclude = exclude.length > 0;
@@ -76,8 +77,9 @@ export const search = <T = Array<any>>({
 		// clone the data to avoid mutating the original data
 		const clonedData = structuredClone(data);
 
-		if (!hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
+		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
+		const normalRegex = new RegExp(normal.map((k) => `(?=.*${k})`).join(' '), 'gi');
 		const exactRegex = new RegExp(exact.map((k) => `(?=.*\\b${k}\\b)`).join('|'), 'gi');
 		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');
 		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');
@@ -85,10 +87,12 @@ export const search = <T = Array<any>>({
 		const result = clonedData.filter((item) => {
 			const fieldsToMatch = fields.map((field) => item[field]).join(' ');
 
+			const isNormalMatch = normalRegex.test(fieldsToMatch);
 			const isExactMatch = exactRegex.test(fieldsToMatch);
 			const isPartialMatch = partialRegex.test(fieldsToMatch);
 			const isExcludedMatch = excludeRegex.test(fieldsToMatch);
 
+			if (hasNormal && !isNormalMatch) return false;
 			if (hasExact && !isExactMatch) return false;
 			if (hasPartial && !isPartialMatch) return false;
 			if (hasExclude && isExcludedMatch) return false;

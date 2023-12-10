@@ -2,7 +2,7 @@
 	import { ViewArticlesList } from '$lib/layouts';
 
 	export let data;
-	$: ({ articles } = data);
+	$: ({ articles, elapsedTime } = data);
 </script>
 
 <svelte:head>
@@ -10,4 +10,4 @@
 	<meta name="description" content="A list of articles" />
 </svelte:head>
 
-<ViewArticlesList {articles} />
+<ViewArticlesList {articles} {elapsedTime} />

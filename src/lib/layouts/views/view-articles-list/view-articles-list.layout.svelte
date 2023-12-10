@@ -1,17 +1,16 @@
 <script lang="ts">
 	import { goto, invalidateAll } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { CardArticle, InputSearchBar, FeedbackArticleNotFound } from '$lib/layouts';
+	import { InputSearchBar, ListArticles } from '$lib/layouts';
 	import { debounce } from '$lib/utils';
 	import type { TArticle } from '$lib/ts';
 
 	const DEBOUNCE_SEARCH_TIME = 700;
 
 	export let articles: Array<TArticle>;
+	export let elapsedTime: number;
 	let searchTerm = $page.url.searchParams.get('search') ?? '';
 	let loading = false;
-
-	$: hasArticles = articles.length > 0;
 
 	const searchDebounce = debounce(async (term: string) => {
 		loading = true;
@@ -36,19 +35,12 @@
 		on:input={handleSearch}
 	/>
 
-	{#if hasArticles}
-		<ul>
-			{#each articles as article (article.id)}
-				<li>
-					<a href="/{article.slug}">
-						<CardArticle {article} />
-					</a>
-				</li>
-			{/each}
-		</ul>
-	{:else}
-		<FeedbackArticleNotFound />
-	{/if}
+	<div class="benchmarks">
+		<span>Approximately {articles.length} results</span>
+		<span>({elapsedTime.toFixed(3)} seconds)</span>
+	</div>
+
+	<ListArticles {articles} />
 </section>
 
 <style lang="postcss">
@@ -63,9 +55,8 @@
 			}
 		}
 
-		& > ul {
-			@apply flex max-h-[50dvh] scroll-px-16 flex-col gap-4
-			overflow-auto scroll-smooth will-change-scroll scrollbar-thin scrollbar-thumb-secondary;
+		& > div.benchmarks {
+			@apply mb-6 mt-2 text-right text-sm text-muted-foreground;
 		}
 	}
 </style>

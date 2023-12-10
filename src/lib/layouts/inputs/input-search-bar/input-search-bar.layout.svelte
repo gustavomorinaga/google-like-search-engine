@@ -22,7 +22,7 @@
 
 <style lang="postcss">
 	div.search-bar {
-		@apply relative mb-8;
+		@apply relative;
 
 		& > div.prefix {
 			@apply absolute left-3 top-1/2 -translate-y-1/2 transform;
