@@ -88,35 +88,45 @@ export const search = <T = Array<any>>({
 
 		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
-		const normalRegex = new RegExp(`(?=.*${normal.join(')(?=.*')})`, 'gi');
-		const exactRegex = new RegExp(exact.map((k) => `(?=.*\\b${k}\\b)`).join('|'), 'gi');
-		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');
-		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');
+		const emptyRegex = new RegExp('^$', 'gi');
+		const normalRegex = new RegExp(`${normal.join('|')}`, 'gi');
+		const exactRegex = new RegExp(`(?=.*${exact.join(')(?=.*')}).*$`, 'gi');
+		const partialRegex = hasPartial
+			? new RegExp(`(?:^|(?=[^']))(${partial.join('|')})`, 'gi')
+			: emptyRegex;
+		const excludeRegex = hasExclude
+			? new RegExp(`(?:^|(?=[^']))(${exclude.join('|')})`, 'gi')
+			: emptyRegex;
 
 		const result = clonedData
 			.map<TScored<T> | null>((item) => {
 				const fieldsToMatch = fields.map((field) => item[field]).join(' ');
 
-				const isNormalMatch = normalRegex.test(fieldsToMatch);
-				const isExactMatch = exactRegex.test(fieldsToMatch);
-				const isPartialMatch = partialRegex.test(fieldsToMatch);
-				const isExcludedMatch = excludeRegex.test(fieldsToMatch);
+				const excludeResult = fieldsToMatch.match(excludeRegex);
+				if (hasExclude && excludeResult) return null;
 
-				if (hasNormal && !isNormalMatch) return null;
-				if (hasExact && !isExactMatch) return null;
-				if (hasPartial && !isPartialMatch) return null;
-				if (hasExclude && isExcludedMatch) return null;
+				const normalResult = fieldsToMatch.match(normalRegex);
+				const exactResult = fieldsToMatch.match(exactRegex);
+				const partialResult = fieldsToMatch.match(partialRegex);
+
+				const normalCount = normalResult?.length ?? 0;
+				const exactCount = exactResult?.length ?? 0;
+				const partialCount = partialResult?.length ?? 0;
+
+				if (hasNormal && !normalResult) return null;
+				if (hasExact && !exactResult) return null;
+				if (hasPartial && !partialResult) return null;
 
 				let score = 0;
-				if (isNormalMatch) score++;
-				if (isExactMatch) score++;
-				if (isPartialMatch) score++;
+				if (normalCount) score += normalCount;
+				if (exactCount) score += exactCount;
+				if (partialCount) score += partialCount;
 
 				return { ...item, score };
 			})
 			.filter(notEmptyFilter)
 			.sort(sortByScore)
-			.map(({ score, ...item }) => item as T);
+			.map(({ score, ...rest }) => rest as T);
 
 		return resolve(result);
 	});
