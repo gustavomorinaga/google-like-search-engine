@@ -21,8 +21,8 @@
 	</Button>
 
 	<header>
-		<h1>{title}</h1>
-		<p>{description}</p>
+		<h1>{@html title}</h1>
+		<p>{@html description}</p>
 
 		<div class="info">
 			<span>By {author}</span>
