@@ -28,7 +28,7 @@
 
 <section>
 	<header>
-		<h1>Google-like Search Engine</h1>
+		<h1>Google-Like Search Engine</h1>
 		<p>
 			These are some article examples. They are fetched from a <a
 				href="{$page.url.origin}/db/articles.data.json"

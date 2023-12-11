@@ -28,6 +28,9 @@ devDependencies:
   '@sveltejs/kit':
     specifier: ^1.27.4
     version: 1.27.7(svelte@4.2.8)(vite@4.5.1)
+  '@tanstack/svelte-virtual':
+    specifier: ^3.0.1
+    version: 3.0.1(svelte@4.2.8)
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.0.0
     version: 6.13.2(@typescript-eslint/parser@6.13.2)(eslint@8.55.0)(typescript@5.3.3)
@@ -533,6 +536,19 @@ packages:
     dependencies:
       tslib: 2.6.2
     dev: false
+
+  /@tanstack/svelte-virtual@3.0.1(svelte@4.2.8):
+    resolution: {integrity: sha512-zGi0Dl5yr9FzDFAEosF3V1/KqbhKPsZsQ7DFAy7qLepOAkxh/whlH2f4kvWl1Vi1a3nx4mjDFBJOJvmOwmdOFA==}
+    peerDependencies:
+      svelte: ^3.48.0 || ^4.0.0
+    dependencies:
+      '@tanstack/virtual-core': 3.0.0
+      svelte: 4.2.8
+    dev: true
+
+  /@tanstack/virtual-core@3.0.0:
+    resolution: {integrity: sha512-SYXOBTjJb05rXa2vl55TTwO40A6wKu0R5i1qQwhJYNDIqaIGF7D0HsLw+pJAyi2OvntlEIVusx3xtbbgSUi6zg==}
+    dev: true
 
   /@trysound/sax@0.2.0:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
