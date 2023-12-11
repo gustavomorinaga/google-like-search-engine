@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>{article.title}</title>
+	<title>{article.title} | Google-Like Search Engine</title>
 	<meta name="description" content={article.description} />
 </svelte:head>
 

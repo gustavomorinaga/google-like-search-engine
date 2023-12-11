@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-	<title>Google-like Search Engine</title>
+	<title>Google-Like Search Engine</title>
 	<meta
 		name="description"
 		content="Simple implementation of a Google-like search engine using TypeScript and SvelteKit"

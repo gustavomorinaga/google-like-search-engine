@@ -4,6 +4,7 @@ import {
 	clearPerformance,
 	measurePerformance,
 	search,
+	sortByDate,
 	type TPerformanceMarkNames
 } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
@@ -11,7 +12,7 @@ import type { TArticle } from '$lib/ts';
 export const load = async ({ fetch, url }) => {
 	const data = await fetch(`${url.origin}/db/articles.data.json`)
 		.then<Array<TArticle>>((res) => res.json())
-		.then((res) => res.sort((a, b) => (a.createdAt > b.createdAt ? -1 : 1)));
+		.then((res) => res.sort(sortByDate));
 
 	const searchTerm = url.searchParams.get('search') ?? '';
 

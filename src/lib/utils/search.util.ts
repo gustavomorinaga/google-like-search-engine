@@ -1,4 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { notEmptyFilter, sortByScore } from '$lib/utils';
 
 /**
  * Represents the search keywords for a search engine.
@@ -19,6 +22,12 @@ type TSearchProps<T> = {
 	fields: Array<keyof T>;
 	term?: string | null;
 };
+
+/**
+ * Represents a type that includes a score property.
+ * @template T - The base type.
+ */
+type TScored<T> = T & { score: number };
 
 /**
  * Regular expression used for searching keywords in a search engine.
@@ -84,21 +93,30 @@ export const search = <T = Array<any>>({
 		const partialRegex = new RegExp(partial.map((k) => `(?=.*${k})`).join('|'), 'gi');
 		const excludeRegex = new RegExp(exclude.map((k) => `(?=.*${k})`).join('|'), 'gi');
 
-		const result = clonedData.filter((item) => {
-			const fieldsToMatch = fields.map((field) => item[field]).join(' ');
+		const result = clonedData
+			.map<TScored<T> | null>((item) => {
+				const fieldsToMatch = fields.map((field) => item[field]).join(' ');
 
-			const isNormalMatch = normalRegex.test(fieldsToMatch);
-			const isExactMatch = exactRegex.test(fieldsToMatch);
-			const isPartialMatch = partialRegex.test(fieldsToMatch);
-			const isExcludedMatch = excludeRegex.test(fieldsToMatch);
+				const isNormalMatch = normalRegex.test(fieldsToMatch);
+				const isExactMatch = exactRegex.test(fieldsToMatch);
+				const isPartialMatch = partialRegex.test(fieldsToMatch);
+				const isExcludedMatch = excludeRegex.test(fieldsToMatch);
 
-			if (hasNormal && !isNormalMatch) return false;
-			if (hasExact && !isExactMatch) return false;
-			if (hasPartial && !isPartialMatch) return false;
-			if (hasExclude && isExcludedMatch) return false;
+				if (hasNormal && !isNormalMatch) return null;
+				if (hasExact && !isExactMatch) return null;
+				if (hasPartial && !isPartialMatch) return null;
+				if (hasExclude && isExcludedMatch) return null;
 
-			return true;
-		});
+				let score = 0;
+				if (isNormalMatch) score++;
+				if (isExactMatch) score++;
+				if (isPartialMatch) score++;
+
+				return { ...item, score };
+			})
+			.filter(notEmptyFilter)
+			.sort(sortByScore)
+			.map(({ score, ...item }) => item as T);
 
 		return resolve(result);
 	});
