@@ -4,8 +4,8 @@
 	import type { TArticle } from '$lib/ts';
 
 	export let articles: Array<TArticle>;
+	export let virtualItemsRef: Array<HTMLLIElement> = [];
 	let virtualListRef: HTMLDivElement;
-	let virtualItemsRef: Array<HTMLLIElement> = [];
 
 	$: hasArticles = articles.length > 0;
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLLIElement>({

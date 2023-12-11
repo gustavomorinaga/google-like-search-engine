@@ -10,8 +10,8 @@
 <Card.Root class="hover:border-primary transition-colors group">
 	<Card.Header class="flex-row justify-between space-y-0">
 		<div class="flex flex-col gap-2">
-			<Card.Title>{title}</Card.Title>
-			<Card.Description>{description}</Card.Description>
+			<Card.Title>{@html title}</Card.Title>
+			<Card.Description>{@html description}</Card.Description>
 		</div>
 
 		<div class="flex flex-col gap-2">

@@ -20,10 +20,55 @@
 		const searchParams = new URLSearchParams({ search: term });
 		const url = '/' + (term && `?${searchParams.toString()}`);
 
-		await goto(url).finally(() => (loading = false));
+		await goto(url).finally(() => {
+			loading = false;
+		});
 	}, DEBOUNCE_SEARCH_TIME);
 
 	const handleSearch = async () => await searchDebounce(searchTerm);
+
+	// const handleHighlight = () => {
+	// 	if (!searchTerm) return;
+	// 	if (!virtualItemsRef.length) return;
+
+	// 	const { normal, exact, partial } = getSearchKeywords(searchTerm);
+
+	// 	for (const itemRef of virtualItemsRef) {
+	// 		if (!itemRef) continue;
+
+	// 		const alreadyHighlightedNormal = itemRef.innerHTML.match(highlightRegex(normal));
+	// 		const alreadyHighlightedExact = itemRef.innerHTML.match(highlightRegex(exact));
+	// 		const alreadyHighlightedPartial = itemRef.innerHTML.match(highlightRegex(partial));
+	// 		if (alreadyHighlightedNormal || alreadyHighlightedExact || alreadyHighlightedPartial)
+	// 			continue;
+
+	// 		itemRef.innerHTML = itemRef.innerHTML
+	// 			.replaceAll(normalRegex(normal), '<mark>$&</mark>')
+	// 			.replaceAll(exactRegex(exact), '<mark>$&</mark>')
+	// 			.replaceAll(partialRegex(partial), '<mark>$&</mark>');
+	// 	}
+	// };
+
+	// const handleClearHighlight = () => {
+	// 	console.log('limpando');
+	// 	if (!virtualItemsRef.length) return;
+
+	// 	const { normal, exact, partial } = getSearchKeywords(searchTerm);
+
+	// 	for (const itemRef of virtualItemsRef) {
+	// 		if (!itemRef) continue;
+
+	// 		const alreadyCleanedNormal = !itemRef.innerHTML.match(highlightRegex(normal));
+	// 		const alreadyCleanedExact = !itemRef.innerHTML.match(highlightRegex(exact));
+	// 		const alreadyCleanedPartial = !itemRef.innerHTML.match(highlightRegex(partial));
+	// 		if (alreadyCleanedNormal || alreadyCleanedExact || alreadyCleanedPartial) continue;
+
+	// 		itemRef.innerHTML = itemRef.innerHTML
+	// 			.replaceAll(highlightRegex(normal), '$&')
+	// 			.replaceAll(highlightRegex(exact), '$&')
+	// 			.replaceAll(highlightRegex(partial), '$&');
+	// 	}
+	// };
 </script>
 
 <section>

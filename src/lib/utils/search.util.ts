@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { notEmptyFilter, sortByScore } from '$lib/utils';
+import {
+	emptyRegex,
+	normalRegex,
+	exactRegex,
+	partialRegex,
+	excludeRegex,
+	notEmptyFilter,
+	sortByScore
+} from '$lib/utils';
 
 /**
  * Represents the search keywords for a search engine.
@@ -21,6 +29,9 @@ type TSearchProps<T> = {
 	data: Array<T>;
 	fields: Array<Extract<keyof T, string>>;
 	term?: string | null;
+	options?: {
+		highlight?: boolean;
+	};
 };
 
 /**
@@ -73,7 +84,8 @@ export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
 export const search = <T = Array<any>>({
 	data,
 	fields,
-	term
+	term,
+	options
 }: TSearchProps<T>): Promise<Array<T>> =>
 	new Promise((resolve) => {
 		const { normal, exact, partial, exclude } = getSearchKeywords(term);
@@ -88,15 +100,10 @@ export const search = <T = Array<any>>({
 
 		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
 
-		const emptyRegex = new RegExp('^$', 'gi');
-		const normalRegex = new RegExp(`${normal.join('|')}`, 'gi');
-		const exactRegex = new RegExp(`(?=.*${exact.join(')(?=.*')}).*$`, 'gi');
-		const partialRegex = hasPartial
-			? new RegExp(`(?:^|(?=[^']))(\\b${partial.join('|')}\\b)`, 'gi')
-			: emptyRegex;
-		const excludeRegex = hasExclude
-			? new RegExp(`(?:^|(?=[^']))(\\b${exclude.join('|')}\\b)`, 'gi')
-			: emptyRegex;
+		const normalSearchRegex = normalRegex(normal);
+		const exactSearchRegex = exactRegex(exact);
+		const partialSearchRegex = partialRegex(partial);
+		const excludeSearchRegex = excludeRegex(exclude);
 
 		const setOfFields = [...new Set(fields)];
 
@@ -104,12 +111,12 @@ export const search = <T = Array<any>>({
 			.map<TScored<T> | null>((item) => {
 				const fieldsToMatch = setOfFields.map((field) => item[field]).join(' ');
 
-				const excludeResult = fieldsToMatch.match(excludeRegex);
+				const excludeResult = fieldsToMatch.match(excludeSearchRegex);
 				if (hasExclude && excludeResult) return null;
 
-				const normalResult = fieldsToMatch.match(normalRegex);
-				const exactResult = fieldsToMatch.match(exactRegex);
-				const partialResult = fieldsToMatch.match(partialRegex);
+				const normalResult = fieldsToMatch.match(normalSearchRegex);
+				const exactResult = fieldsToMatch.match(exactSearchRegex);
+				const partialResult = fieldsToMatch.match(partialSearchRegex);
 
 				if (hasNormal && !normalResult) return null;
 				if (hasExact && !exactResult) return null;
@@ -124,7 +131,24 @@ export const search = <T = Array<any>>({
 				if (exactCount) score += exactCount;
 				if (partialCount) score += partialCount;
 
-				return { ...item, score };
+				let mappedItem = { ...item, score };
+
+				if (options?.highlight) {
+					const highlightedFields = setOfFields.reduce(
+						(acc, field) => ({
+							...acc,
+							[field]: (item[field] as string)
+								.replaceAll(normalSearchRegex, (match) => `<mark>${match}</mark>`)
+								.replaceAll(exactSearchRegex, (match) => `<mark>${match}</mark>`)
+								.replaceAll(partialSearchRegex, (match) => `<mark>${match}</mark>`)
+						}),
+						{}
+					);
+
+					mappedItem = { ...mappedItem, ...highlightedFields };
+				}
+
+				return mappedItem;
 			})
 			.filter(notEmptyFilter)
 			.sort(sortByScore)

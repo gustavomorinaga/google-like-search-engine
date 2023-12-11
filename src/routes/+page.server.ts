@@ -28,7 +28,8 @@ export const load = async ({ fetch, url }) => {
 	const articles = await search({
 		data,
 		fields: ['title', 'description', 'content'],
-		term: searchTerm
+		term: searchTerm,
+		options: { highlight: Boolean(searchTerm) }
 	}).finally(() => {
 		endPerformance(performanceMarkNames.end);
 		elapsedTime = measurePerformance(performanceMarkNames).duration;
