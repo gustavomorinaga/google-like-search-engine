@@ -36,6 +36,6 @@
 
 <style lang="postcss">
 	footer {
-		@apply container absolute inset-x-0 bottom-0 py-4 text-center;
+		@apply container border-t border-border py-4 text-center;
 	}
 </style>

@@ -51,7 +51,7 @@
 		}
 
 		& > header {
-			@apply z-10 mb-16;
+			@apply z-10 mb-8 border-b border-border;
 
 			& > h1 {
 				@apply mb-4 text-4xl font-bold;
@@ -62,7 +62,7 @@
 			}
 
 			& > div.info {
-				@apply inline-flex items-center gap-2;
+				@apply mb-2 flex flex-wrap items-center gap-2;
 			}
 		}
 
