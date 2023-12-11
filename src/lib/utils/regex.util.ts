@@ -4,6 +4,11 @@
 export const emptyRegex = new RegExp('^$', 'gi');
 
 /**
+ * Regular expression for matching special characters.
+ */
+export const specialCharRegex = new RegExp("[`!#%^&*()_=[\\]{};':|,.<>/?~]", 'gi');
+
+/**
  * Creates a regular expression for highlighting specific values in a string.
  * @param values - An array of strings to be highlighted.
  * @returns A regular expression that matches the values and wraps them in <mark> tags.

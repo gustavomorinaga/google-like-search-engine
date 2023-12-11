@@ -8,7 +8,8 @@ import {
 	partialRegex,
 	excludeRegex,
 	notEmptyFilter,
-	sortByScore
+	sortByScore,
+	specialCharRegex
 } from '$lib/utils';
 
 /**
@@ -65,6 +66,9 @@ export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
 		const isExclude = keyword.startsWith('-');
 		const isNormal = !isExact && !isPartial && !isExclude;
 
+		// ignore keywords that only contain plus/minus signs
+		if ([...keyword].every((char) => char === '+' || char === '-')) return acc;
+
 		if (isExact) acc.exact.push(keyword.slice(1, -1));
 		if (isPartial) acc.partial.push(keyword.slice(1));
 		if (isExclude) acc.exclude.push(keyword.slice(1));
@@ -88,7 +92,8 @@ export const search = <T = Array<any>>({
 	options
 }: TSearchProps<T>): Promise<Array<T>> =>
 	new Promise((resolve) => {
-		const { normal, exact, partial, exclude } = getSearchKeywords(term);
+		const sanitizedTerm = term?.trim()?.replace(specialCharRegex, '') ?? '';
+		const { normal, exact, partial, exclude } = getSearchKeywords(sanitizedTerm);
 
 		const hasNormal = normal.length > 0;
 		const hasExact = exact.length > 0;
