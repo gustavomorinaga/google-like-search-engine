@@ -13,7 +13,9 @@
 </script>
 
 <Dialog.Root bind:open={dialogOpen}>
-	<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })}>❔</Dialog.Trigger>
+	<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })} title="Instructions">
+		❔
+	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-md md:max-w-2xl">
 		<Dialog.Header>
 			<Dialog.Title>Instructions</Dialog.Title>

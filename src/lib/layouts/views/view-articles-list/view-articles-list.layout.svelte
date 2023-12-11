@@ -49,18 +49,19 @@
 				</a> for more details.
 			</p>
 		</div>
-
-		<div class="mt-auto ml-auto">
-			<DialogInstructions />
-		</div>
 	</header>
 
-	<InputSearchBar
-		bind:searchTerm
-		bind:loading
-		placeholder="Type to search a article..."
-		on:input={handleSearch}
-	/>
+	<div class="search">
+		<InputSearchBar
+			bind:searchTerm
+			bind:loading
+			placeholder="Type to search a article..."
+			on:input={handleSearch}
+		/>
+		<div class="ml-auto">
+			<DialogInstructions />
+		</div>
+	</div>
 
 	<div class="benchmarks">
 		<span>Approximately {articles.length} results</span>
@@ -72,10 +73,10 @@
 
 <style lang="postcss">
 	section {
-		@apply mt-[10dvh] block h-full;
+		@apply mt-4 block h-full md:mt-[10dvh];
 
 		& > header {
-			@apply mb-8 flex justify-between gap-16;
+			@apply mb-8 flex flex-wrap justify-between gap-x-16 gap-y-4 md:flex-nowrap;
 
 			& h1 {
 				@apply mb-4 text-4xl font-bold;
@@ -89,6 +90,10 @@
 			& a {
 				@apply font-medium underline-offset-2 hover:underline;
 			}
+		}
+
+		& > div.search {
+			@apply flex items-center justify-stretch gap-4;
 		}
 
 		& > div.benchmarks {

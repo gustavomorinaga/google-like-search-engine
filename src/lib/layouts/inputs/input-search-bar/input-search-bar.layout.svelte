@@ -22,7 +22,7 @@
 
 <style lang="postcss">
 	div.search-bar {
-		@apply relative;
+		@apply relative grow;
 
 		& > div.prefix {
 			@apply absolute left-3 top-1/2 -translate-y-1/2 transform;
@@ -30,7 +30,7 @@
 		}
 
 		& > div.loader {
-			@apply absolute right-4 top-1/2 -translate-y-1/2 transform rounded-md bg-muted px-3;
+			@apply absolute right-3 top-1/2 -translate-y-1/2 transform rounded-md bg-muted px-3;
 			@apply pointer-events-none flex items-center gap-2;
 
 			& > span.spinner {
