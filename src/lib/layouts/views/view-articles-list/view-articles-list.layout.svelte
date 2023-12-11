@@ -39,6 +39,14 @@
 				>
 					this JSON file.
 				</a>
+				Checkout the
+				<a
+					href="https://github.com/gustavomorinaga/google-like-search-engine"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					source code
+				</a> for more details.
 			</p>
 		</div>
 
@@ -67,10 +75,15 @@
 		@apply mt-[10dvh] block h-full;
 
 		& > header {
-			@apply mb-8 flex flex-wrap justify-between gap-8;
+			@apply mb-8 flex justify-between gap-16;
 
 			& h1 {
 				@apply mb-4 text-4xl font-bold;
+			}
+
+			& p {
+				@apply text-lg text-muted-foreground;
+				text-wrap: balance;
 			}
 
 			& a {
