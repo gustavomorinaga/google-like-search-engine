@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { createVirtualizer } from '@tanstack/svelte-virtual';
 	import { CardArticle, FeedbackArticleNotFound } from '$lib/layouts';
 	import type { TArticle } from '$lib/ts';
@@ -7,6 +8,7 @@
 	export let virtualItemsRef: Array<HTMLLIElement> = [];
 	let virtualListRef: HTMLDivElement;
 
+	$: keywords = $page.url.searchParams.get('search') ?? '';
 	$: hasArticles = articles.length > 0;
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLLIElement>({
 		count: articles.length,
@@ -27,7 +29,7 @@
 					{@const article = articles[row.index]}
 
 					<li bind:this={virtualItemsRef[index]} data-index={row.index}>
-						<a href="/{article.slug}">
+						<a href="/{article.slug}{keywords && `?keywords=${keywords}`}">
 							<CardArticle {article} />
 						</a>
 					</li>
