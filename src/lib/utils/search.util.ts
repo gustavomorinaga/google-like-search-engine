@@ -92,10 +92,10 @@ export const search = <T = Array<any>>({
 		const normalRegex = new RegExp(`${normal.join('|')}`, 'gi');
 		const exactRegex = new RegExp(`(?=.*${exact.join(')(?=.*')}).*$`, 'gi');
 		const partialRegex = hasPartial
-			? new RegExp(`(?:^|(?=[^']))(${partial.join('|')})`, 'gi')
+			? new RegExp(`(?:^|(?=[^']))(\\b${partial.join('|')}\\b)`, 'gi')
 			: emptyRegex;
 		const excludeRegex = hasExclude
-			? new RegExp(`(?:^|(?=[^']))(${exclude.join('|')})`, 'gi')
+			? new RegExp(`(?:^|(?=[^']))(\\b${exclude.join('|')}\\b)`, 'gi')
 			: emptyRegex;
 
 		const setOfFields = [...new Set(fields)];
