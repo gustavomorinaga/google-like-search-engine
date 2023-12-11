@@ -3,6 +3,9 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
+	"author": "Gustavo Morinaga <me@gustavomorinaga.dev>",
+	"description": "Simple implementation of a Google-like search engine using TypeScript and SvelteKit",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -11,7 +14,8 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"ui:add": "pnpm dlx shadcn-svelte@latest add"
+		"ui:add": "pnpm dlx shadcn-svelte@latest add",
+		"clean": "del-cli ./**/node_modules/ ./**/.svelte-kit/"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
@@ -21,6 +25,7 @@
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.14",
 		"cssnano": "^6.0.1",
+		"del-cli": "^5.1.0",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-svelte": "^2.30.0",

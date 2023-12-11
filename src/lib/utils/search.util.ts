@@ -19,7 +19,7 @@ type TSearchKeywords = {
  */
 type TSearchProps<T> = {
 	data: Array<T>;
-	fields: Array<keyof T>;
+	fields: Array<Extract<keyof T, string>>;
 	term?: string | null;
 };
 
@@ -98,9 +98,11 @@ export const search = <T = Array<any>>({
 			? new RegExp(`(?:^|(?=[^']))(${exclude.join('|')})`, 'gi')
 			: emptyRegex;
 
+		const setOfFields = [...new Set(fields)];
+
 		const result = clonedData
 			.map<TScored<T> | null>((item) => {
-				const fieldsToMatch = fields.map((field) => item[field]).join(' ');
+				const fieldsToMatch = setOfFields.map((field) => item[field]).join(' ');
 
 				const excludeResult = fieldsToMatch.match(excludeRegex);
 				if (hasExclude && excludeResult) return null;
@@ -109,13 +111,13 @@ export const search = <T = Array<any>>({
 				const exactResult = fieldsToMatch.match(exactRegex);
 				const partialResult = fieldsToMatch.match(partialRegex);
 
-				const normalCount = normalResult?.length ?? 0;
-				const exactCount = exactResult?.length ?? 0;
-				const partialCount = partialResult?.length ?? 0;
-
 				if (hasNormal && !normalResult) return null;
 				if (hasExact && !exactResult) return null;
 				if (hasPartial && !partialResult) return null;
+
+				const normalCount = normalResult?.length ?? 0;
+				const exactCount = exactResult?.length ?? 0;
+				const partialCount = partialResult?.length ?? 0;
 
 				let score = 0;
 				if (normalCount) score += normalCount;

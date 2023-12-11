@@ -11,7 +11,9 @@
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLLIElement>({
 		count: articles.length,
 		getScrollElement: () => virtualListRef,
-		estimateSize: () => 100
+		estimateSize: () => 100,
+		overscan: 5,
+		scrollPaddingEnd: 8
 	});
 	$: items = $virtualizer.getVirtualItems();
 	$: if (virtualItemsRef.length) virtualItemsRef.forEach((el) => $virtualizer.measureElement(el));
