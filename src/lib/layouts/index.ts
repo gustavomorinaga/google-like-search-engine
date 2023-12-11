@@ -4,5 +4,6 @@ export * from './views';
 export * from './lists';
 export * from './cards';
 export * from './hover-cards';
+export * from './dialogs';
 export * from './inputs';
 export * from './feedbacks';

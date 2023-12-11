@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { InputSearchBar, ListArticles } from '$lib/layouts';
+	import { DialogInstructions, InputSearchBar, ListArticles } from '$lib/layouts';
 	import { debounce } from '$lib/utils';
 	import type { TArticle } from '$lib/ts';
 
@@ -28,14 +28,23 @@
 
 <section>
 	<header>
-		<h1>Google-Like Search Engine</h1>
-		<p>
-			These are some article examples. They are fetched from a <a
-				href="{$page.url.origin}/db/articles.data.json"
-				target="_blank"
-				rel="noopener noreferrer">JSON file</a
-			>.
-		</p>
+		<div>
+			<h1>Google-Like Search Engine</h1>
+			<p>
+				These are some article examples. They are fetched from
+				<a
+					href="{$page.url.origin}/db/articles.data.json"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					this JSON file.
+				</a>
+			</p>
+		</div>
+
+		<div class="mt-auto ml-auto">
+			<DialogInstructions />
+		</div>
 	</header>
 
 	<InputSearchBar
@@ -58,10 +67,14 @@
 		@apply mt-[10dvh] block h-full;
 
 		& > header {
-			@apply mb-8;
+			@apply mb-8 flex flex-wrap justify-between gap-8;
 
-			& > h1 {
+			& h1 {
 				@apply mb-4 text-4xl font-bold;
+			}
+
+			& a {
+				@apply font-medium underline-offset-2 hover:underline;
 			}
 		}
 
