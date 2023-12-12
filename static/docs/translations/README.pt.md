@@ -31,7 +31,11 @@ O motor de busca do Google é um sistema muito complexo, mas eu tentei torná-lo
 Casos que o motor de busca deve ser capaz de lidar:
 
 - Pesquisar artigos por título, descrição e conteúdo.
-- Usar operadores de pesquisa para filtrar os resultados, como correspondência exata, ou, e, not, etc.
+- Usar operadores de pesquisa para filtrar os resultados por:
+  - frase exata (por exemplo, "hello world")
+  - qualquer uma das palavras (por exemplo, hello world)
+  - incluir palavras-chave (por exemplo, +hello +world)
+  - excluir palavras-chave (por exemplo, -hello -world)
 - Registrar o número de resultados encontrados.
 - Registrar o tempo que levou para realizar a pesquisa.
 
@@ -40,6 +44,7 @@ Casos que o motor de busca deve ser capaz de lidar:
 | Ferramenta/Serviço                              | Categoria                         | Descrição                                                                                                           |
 | ----------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | [Vite](https://vitejs.dev/)                     | Ferramentas de Compilação         | Uma ferramenta de compilação que oferece uma experiência de desenvolvimento mais rápida para projetos web modernos. |
+| [CSSNANO](https://cssnano.co/)                  | CSS                               | Um minificador modular, construído em cima do ecossistema PostCSS.                                                  |
 | [PostCSS](https://postcss.org)                  | CSS                               | Uma ferramenta para transformar CSS com JavaScript.                                                                 |
 | [Tailwind CSS](https://tailwindcss.com/)        | CSS                               | Um framework CSS de utilidade em primeiro lugar.                                                                    |
 | [ESLint](https://eslint.org/)                   | Ferramentas JavaScript/TypeScript | Uma ferramenta para identificar e relatar padrões no código ECMAScript/JavaScript.                                  |

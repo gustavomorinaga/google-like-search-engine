@@ -31,15 +31,21 @@ The Google search engine is a very complex system, but I tried to make it as sim
 Cases that the search engine must be able to handle:
 
 - Search for articles by title, description, and content.
-- Use search operators to filter the results, like exact match, or, and, not, etc.
+- Use search operators to filter the results by:
+  - exact phrase (e.g., "hello world")
+  - any of the words (e.g., hello world)
+  - include keywords (e.g., +hello +world)
+  - exclude keywords (e.g., -hello -world)
 - Register the number of results found.
 - Register the time it took to perform the search.
+- Highlight the keywords in the results.
 
 ## Tech Stack
 
 | Tool/Service                                    | Category                    | Description                                                                         |
 | ----------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
 | [Vite](https://vitejs.dev/)                     | Build Tools                 | A build tool that provides a faster development experience for modern web projects. |
+| [CSSNANO](https://cssnano.co/)                  | CSS                         | A modular minifier, built on top of the PostCSS ecosystem.                          |
 | [PostCSS](https://postcss.org)                  | CSS                         | A tool for transforming CSS with JavaScript.                                        |
 | [Tailwind CSS](https://tailwindcss.com/)        | CSS                         | A utility-first CSS framework.                                                      |
 | [ESLint](https://eslint.org/)                   | JavaScript/TypeScript Tools | A tool for identifying and reporting on patterns in ECMAScript/JavaScript code.     |
