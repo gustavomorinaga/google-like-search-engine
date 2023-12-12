@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { blur } from 'svelte/transition';
 	import { Input } from '$lib/components/ui/input';
+	import { Search } from 'lucide-svelte';
 
 	export let searchTerm: string;
 	export let loading: boolean;
@@ -8,7 +9,9 @@
 </script>
 
 <div class="search-bar">
-	<div class="prefix">🔍</div>
+	<div class="prefix">
+		<Search class="h-4 w-4" />
+	</div>
 
 	<Input type="text" {placeholder} class="pl-10" autofocus bind:value={searchTerm} on:input />
 

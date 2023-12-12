@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator';
+	import { ArrowLeft } from 'lucide-svelte';
 	import type { TArticle } from '$lib/ts';
 
 	export let article: TArticle;
@@ -16,7 +17,7 @@
 	</figure>
 
 	<Button size="sm" variant="outline" class="mb-8" href="/">
-		<span class="text-lg mr-2">⭠</span>
+		<ArrowLeft class="w-4 h-4 mr-2" />
 		Back to articles
 	</Button>
 

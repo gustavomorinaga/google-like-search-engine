@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, buttonVariants } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
+	import { HelpCircle } from 'lucide-svelte';
 
 	const instructions = [
 		'Make a normal search, eg. important travel',
@@ -14,7 +15,7 @@
 
 <Dialog.Root bind:open={dialogOpen}>
 	<Dialog.Trigger class={buttonVariants({ variant: 'outline', size: 'icon' })} title="Instructions">
-		❔
+		<HelpCircle class="h-6 w-6" />
 	</Dialog.Trigger>
 	<Dialog.Content class="sm:max-w-md md:max-w-2xl">
 		<Dialog.Header>
