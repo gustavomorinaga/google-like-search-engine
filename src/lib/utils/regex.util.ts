@@ -14,7 +14,7 @@ export const specialCharRegex = new RegExp("[`!#%^&*()_=[\\]{};':|,.<>/?~]", 'gi
  * @returns A regular expression that matches the values and wraps them in <mark> tags.
  */
 export const highlightRegex = (values: Array<string>) =>
-	new RegExp(`(<mark>${values.join('</mark>)|(<mark>')})</mark>`, 'gi');
+	new RegExp(values.map((value) => `<mark>${value}</mark>`).join(''), 'gi');
 
 /**
  * Creates a regular expression pattern that matches any of the specified values.
@@ -26,14 +26,13 @@ export const normalRegex = (values: Array<string>) =>
 	values.length ? new RegExp(`${values.join('|')}`, 'gi') : emptyRegex;
 
 /**
- * Creates a regular expression that matches strings containing all the specified values.
- *
+ * Creates a regular expression that matches exact word matches from an array of values.
  * @param values - An array of strings to match.
- * @returns A regular expression object.
+ * @returns A regular expression object that matches the exact word matches.
  */
 export const exactRegex = (values: Array<string>) =>
 	values.length
-		? new RegExp(`(?:^|(?=[^']))(\\b${values.join('\\b)(?=.*\\b')}\\b)`, 'gi')
+		? new RegExp(values.map((value) => `(\\b${value}\\b)`).join('|'), 'gi')
 		: emptyRegex;
 
 /**

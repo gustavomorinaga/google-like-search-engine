@@ -2,14 +2,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import {
-	emptyRegex,
 	normalRegex,
 	exactRegex,
 	partialRegex,
 	excludeRegex,
 	notEmptyFilter,
 	sortByScore,
-	specialCharRegex
+	specialCharRegex,
+	countStringOccurrences,
+	highlightFields
 } from '$lib/utils';
 
 /**
@@ -120,35 +121,42 @@ export const search = <T = Array<any>>({
 				if (hasExclude && excludeResult) return null;
 
 				const normalResult = fieldsToMatch.match(normalSearchRegex);
-				const exactResult = fieldsToMatch.match(exactSearchRegex);
-				const partialResult = fieldsToMatch.match(partialSearchRegex);
-
 				if (hasNormal && !normalResult) return null;
+
+				const exactResult = fieldsToMatch.match(exactSearchRegex);
 				if (hasExact && !exactResult) return null;
+
+				const partialResult = fieldsToMatch.match(partialSearchRegex);
 				if (hasPartial && !partialResult) return null;
 
-				const normalCount = normalResult?.length ?? 0;
-				const exactCount = exactResult?.length ?? 0;
-				const partialCount = partialResult?.length ?? 0;
-
 				let score = 0;
-				if (normalCount) score += normalCount;
-				if (exactCount) score += exactCount;
-				if (partialCount) score += partialCount;
+
+				if (normalResult) {
+					const normalCount = normalResult?.length ?? 0;
+					const normalOccurrences = countStringOccurrences(normalResult);
+					if (normalCount) score += normalOccurrences.total * normalOccurrences.matches.length;
+				}
+
+				if (exactResult) {
+					const exactCount = exactResult?.length ?? 0;
+					const exactOccurrences = countStringOccurrences(exactResult);
+					if (exactCount) score += exactOccurrences.total * exactOccurrences.matches.length;
+				}
+
+				if (partialResult) {
+					const partialCount = partialResult?.length ?? 0;
+					const partialOccurrences = countStringOccurrences(partialResult);
+					if (partialCount) score += partialOccurrences.total * partialOccurrences.matches.length;
+				}
 
 				let mappedItem = { ...item, score };
 
 				if (options?.highlight) {
-					const highlightedFields = setOfFields.reduce(
-						(acc, field) => ({
-							...acc,
-							[field]: (item[field] as string)
-								.replaceAll(normalSearchRegex, (match) => `<mark>${match}</mark>`)
-								.replaceAll(exactSearchRegex, (match) => `<mark>${match}</mark>`)
-								.replaceAll(partialSearchRegex, (match) => `<mark>${match}</mark>`)
-						}),
-						{}
-					);
+					const highlightedFields = highlightFields(setOfFields, item, [
+						normalSearchRegex,
+						exactSearchRegex,
+						partialSearchRegex
+					]);
 
 					mappedItem = { ...mappedItem, ...highlightedFields };
 				}
