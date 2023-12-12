@@ -4,3 +4,4 @@ export * from './performance.util';
 export * from './debounce.util';
 export * from './regex.util';
 export * from './search.util';
+export * from './sanitizer.util';
