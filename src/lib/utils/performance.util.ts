@@ -17,10 +17,18 @@ export const clearPerformance = (marks: TPerformanceMarkNames) => {
 	performance.clearMeasures(marks.duration);
 };
 
+/**
+ * Starts a performance measurement by creating a performance mark with the specified name.
+ * @param markName - The name of the performance mark.
+ */
 export const startPerformance = (markName: TPerformanceMarkNames['start']) => {
 	return performance.mark(markName);
 };
 
+/**
+ * Ends the performance measurement by marking the specified performance mark.
+ * @param markName - The name of the performance mark to end.
+ */
 export const endPerformance = (markName: TPerformanceMarkNames['end']) => {
 	return performance.mark(markName);
 };
