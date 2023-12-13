@@ -16,8 +16,9 @@ export const GET = async ({ fetch, url, setHeaders }) => {
 
 	const result = await searchEngine.search(searchTerm);
 
+	// cache for 5 minutes
 	setHeaders({
-		'cache-control': 'public, max-age=3600, s-max-age=3600, stale-while-revalidate=3600'
+		'cache-control': 'public, max-age=300, s-max-age=300, stale-while-revalidate=300'
 	});
 
 	return json(result);
