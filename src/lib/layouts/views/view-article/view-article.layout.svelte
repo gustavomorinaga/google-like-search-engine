@@ -26,7 +26,7 @@
 		<p>{@html description}</p>
 
 		<div class="info">
-			<span>By {author}</span>
+			<span>By {@html author}</span>
 			<Separator orientation="vertical" class="h-6" />
 			<span>Published at {formattedCreatedAt}</span>
 			<Separator orientation="vertical" class="h-6" />

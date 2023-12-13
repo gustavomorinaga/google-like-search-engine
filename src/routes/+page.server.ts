@@ -23,7 +23,7 @@ export const load = async ({ fetch, url, setHeaders }) => {
 	});
 
 	return {
-		articles: articles.json() as Promise<Array<TArticle>>,
+		articles: (await articles.json()) as Promise<Array<TArticle>>,
 		elapsedTime: searchPerformance.getElapsedTime()
 	};
 };

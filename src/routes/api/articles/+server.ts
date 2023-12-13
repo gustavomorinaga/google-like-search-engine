@@ -8,8 +8,6 @@ export const GET = async ({ fetch, url, setHeaders }) => {
 	const searchTerm = url.searchParams.get('search') ?? '';
 	const selectedFields = url.searchParams.get('fields')?.split(',') ?? DEFAULT_FIELDS;
 
-	console.log(selectedFields);
-
 	const data = await fetch(`${url.origin}/db/articles.data.json`)
 		.then<Array<TArticle>>((res) => res.json())
 		.then((res) => res.sort(sortByDate));

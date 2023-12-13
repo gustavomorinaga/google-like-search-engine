@@ -8,7 +8,7 @@
 	export let virtualItemsRef: Array<HTMLLIElement> = [];
 	let virtualListRef: HTMLDivElement;
 
-	$: keywords = $page.url.searchParams.get('search') ?? '';
+	$: searchParams = $page.url.searchParams;
 	$: hasArticles = articles.length > 0;
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLLIElement>({
 		count: articles.length,
@@ -29,7 +29,7 @@
 					{@const article = articles[row.index]}
 
 					<li bind:this={virtualItemsRef[index]} data-index={row.index}>
-						<a href="/{article.slug}{keywords && `?keywords=${keywords}`}">
+						<a href="/{article.slug}?{searchParams.toString()}">
 							<CardArticle {article} />
 						</a>
 					</li>

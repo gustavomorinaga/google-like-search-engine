@@ -8,29 +8,46 @@
 		ListArticles
 	} from '$lib/layouts';
 	import { debounce } from '$lib/utils';
-	import type { TArticle } from '$lib/ts';
+	import type { TArticle, TArticleFields } from '$lib/ts';
 
 	const DEBOUNCE_SEARCH_TIME = 700;
 
 	export let articles: Array<TArticle>;
 	export let elapsedTime: number;
-	let searchTerm = $page.url.searchParams.get('search') ?? '';
 	let loading = false;
+	let searchParams = $page.url.searchParams;
+	let searchTerm = searchParams.get('search') ?? '';
+	let selectedFields: TArticleFields;
 
 	$: elapsedTimeSeconds = elapsedTime / 1000;
+
+	const filterDebounce = debounce(async (fields: TArticleFields) => {
+		loading = true;
+
+		const activeFields = Object.entries(fields)
+			.filter(([, value]) => value)
+			.map(([key]) => key)
+			.join(',');
+
+		if (activeFields) searchParams.set('fields', activeFields);
+		else searchParams.delete('fields');
+
+		const url = `/?${searchParams.toString()}`;
+		await goto(url).finally(() => (loading = false));
+	}, DEBOUNCE_SEARCH_TIME);
 
 	const searchDebounce = debounce(async (term: string) => {
 		loading = true;
 
-		const searchParams = new URLSearchParams({ search: term });
-		const url = '/' + (term && `?${searchParams.toString()}`);
+		if (term) searchParams.set('search', term);
+		else searchParams.delete('search');
 
-		await goto(url).finally(() => {
-			loading = false;
-		});
+		const url = `/?${searchParams.toString()}`;
+		await goto(url).finally(() => (loading = false));
 	}, DEBOUNCE_SEARCH_TIME);
 
 	const handleSearch = async () => await searchDebounce(searchTerm);
+	const handleFilter = async () => await filterDebounce(selectedFields);
 </script>
 
 <section>
@@ -66,7 +83,7 @@
 			on:input={handleSearch}
 		/>
 
-		<DropdownMenuFilters />
+		<DropdownMenuFilters bind:selectedFields onSelectedFieldChange={handleFilter} />
 
 		<div class="ml-2">
 			<DialogInstructions />

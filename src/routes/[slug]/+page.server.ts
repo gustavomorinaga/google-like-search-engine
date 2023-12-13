@@ -9,5 +9,5 @@ export const load = async ({ fetch, url, params: { slug }, setHeaders }) => {
 		'cache-control': article.headers.get('cache-control') ?? ''
 	});
 
-	return { article: article.json() as Promise<TArticle> };
+	return { article: (await article.json()) as Promise<TArticle> };
 };
