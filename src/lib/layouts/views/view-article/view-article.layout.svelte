@@ -7,8 +7,8 @@
 	export let article: TArticle;
 	const { cover, title, description, author, createdAt, updatedAt, content } = article;
 
-	const formattedCreatedAt = new Date(createdAt).toLocaleDateString();
-	const formattedUpdatedAt = new Date(updatedAt).toLocaleDateString();
+	const formattedCreatedAt = new Date(createdAt).toDateString();
+	const formattedUpdatedAt = new Date(updatedAt).toDateString();
 </script>
 
 <article>
