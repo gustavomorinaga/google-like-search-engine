@@ -1,27 +1,23 @@
 /**
  * Represents the names of performance marks.
  */
-export type TPerformanceMarkNames = {
-	start: `start-${string}`;
-	end: `end-${string}`;
-	duration: `duration-${string}`;
-};
+export type TPerformanceMarkNames = [`start-${string}`, `end-${string}`, `duration-${string}`];
 
 /**
  * Clears the performance marks and measures for a given set of mark names.
  * @param marks - The names of the performance marks.
  */
-export const clearPerformance = (marks: TPerformanceMarkNames) => {
-	performance.clearMarks(marks.start);
-	performance.clearMarks(marks.end);
-	performance.clearMeasures(marks.duration);
+export const clearPerformance = ([start, end, duration]: TPerformanceMarkNames) => {
+	performance.clearMarks(start);
+	performance.clearMarks(end);
+	performance.clearMeasures(duration);
 };
 
 /**
  * Starts a performance measurement by creating a performance mark with the specified name.
  * @param markName - The name of the performance mark.
  */
-export const startPerformance = (markName: TPerformanceMarkNames['start']) => {
+export const startPerformance = (markName: string) => {
 	return performance.mark(markName);
 };
 
@@ -29,7 +25,7 @@ export const startPerformance = (markName: TPerformanceMarkNames['start']) => {
  * Ends the performance measurement by marking the specified performance mark.
  * @param markName - The name of the performance mark to end.
  */
-export const endPerformance = (markName: TPerformanceMarkNames['end']) => {
+export const endPerformance = (markName: string) => {
 	return performance.mark(markName);
 };
 
@@ -38,9 +34,9 @@ export const endPerformance = (markName: TPerformanceMarkNames['end']) => {
  * @param markNames - The names of the marks used to measure the performance.
  * @returns The performance entry for the measured duration.
  */
-export const measurePerformance = (markNames: TPerformanceMarkNames) => {
-	performance.measure(markNames.duration, markNames.start, markNames.end);
-	const [entry] = performance.getEntriesByName(markNames.duration);
+export const measurePerformance = ([start, end, duration]: TPerformanceMarkNames) => {
+	performance.measure(duration, start, end);
+	const [entry] = performance.getEntriesByName(duration);
 
 	return entry;
 };

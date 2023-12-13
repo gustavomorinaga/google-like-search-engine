@@ -26,6 +26,14 @@ export const sortByScore = <T extends { score: number }>(a: T, b: T): number =>
 	a.score > b.score ? -1 : 1;
 
 /**
+ * Represents the result of counting string occurrences in an array.
+ */
+export type TCountStringOccurrencesResult<T extends Array<string>> = {
+	matches: Array<TStringOccurrences<T>>;
+	total: number;
+};
+
+/**
  * Represents the occurrences of strings in an array.
  */
 export type TStringOccurrences<T extends Array<string>> = {
@@ -41,8 +49,8 @@ export type TStringOccurrences<T extends Array<string>> = {
  * @returns An object containing the matches and the total count of occurrences.
  */
 export const countStringOccurrences = <T extends Array<string>>(
-	values: Array<string>
-): { matches: Array<TStringOccurrences<T>>; total: number } => {
+	values: T
+): TCountStringOccurrencesResult<T> => {
 	const matches = Object.values(
 		values.reduce((acc: { [key: string]: TStringOccurrences<T> }, value: string) => {
 			if (value in acc) acc[value].occurrences++;

@@ -24,25 +24,6 @@ type TSearchKeywords = {
 };
 
 /**
- * Represents the properties for performing a search operation.
- * @template T The type of data being searched.
- */
-type TSearchProps<T> = {
-	data: Array<T>;
-	fields: Array<Extract<keyof T, string>>;
-	term?: string | null;
-	options?: {
-		highlight?: boolean;
-	};
-};
-
-/**
- * Represents a type that includes a score property.
- * @template T - The base type.
- */
-type TScored<T> = T & { score: number };
-
-/**
  * Regular expression used for searching keywords in a search engine.
  * Matches words, phrases enclosed in double quotes, optional plus/minus signs and include special characters.
  */
@@ -80,82 +61,231 @@ export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
 };
 
 /**
- * Performs a search operation based on the provided keywords, data, and fields.
- *
- * @template T - The type of the data array.
- * @param {TSearchProps<T>} options - The search options.
- * @returns {Array<T>} The filtered array of data items that match the search criteria.
+ * Represents the properties for performing a search operation.
+ * @template T The type of data being searched.
  */
-export const search = <T = Array<any>>({
-	data,
-	fields,
-	term,
-	options
-}: TSearchProps<T>): Promise<Array<T>> =>
-	new Promise((resolve) => {
-		const sanitizedTerm = term?.trim()?.replace(specialCharRegex, '') ?? '';
-		const { normal, exact, partial, exclude } = getSearchKeywords(sanitizedTerm);
+type TSearchProps<T> = {
+	fields: Array<Extract<keyof T, string>>;
+	options?: {
+		highlight?: boolean;
+	};
+};
 
-		const hasNormal = normal.length > 0;
-		const hasExact = exact.length > 0;
-		const hasPartial = partial.length > 0;
-		const hasExclude = exclude.length > 0;
+/**
+ * Represents a type that includes a score property.
+ * @template T - The base type.
+ */
+type TScored<T> = T & { score: number };
 
-		// clone the data to avoid mutating the original data
-		const clonedData = structuredClone(data);
+/**
+ * Represents a search engine that performs search operations on a given dataset.
+ * @template T The type of the data items in the dataset.
+ */
+export class SearchEngine<T> {
+	/**
+	 * The dataset to perform search operations on.
+	 */
+	private data: Array<T>;
 
-		if (!hasNormal && !hasExact && !hasPartial && !hasExclude) return resolve(clonedData);
+	/**
+	 * The fields to search within the data items.
+	 */
+	private fields: Array<Extract<keyof T, string>>;
 
-		const normalSearchRegex = normalRegex(normal);
-		const exactSearchRegex = exactRegex(exact);
-		const partialSearchRegex = partialRegex(partial);
-		const excludeSearchRegex = excludeRegex(exclude);
+	/**
+	 * Optional search options.
+	 */
+	private options?: { highlight?: boolean };
 
-		const setOfFields = [...new Set(fields)];
+	/**
+	 * The search term to be used for searching.
+	 */
+	private term?: string | null = null;
+
+	/**
+	 * Creates a new instance of the SearchEngine class.
+	 * @param data The dataset to perform search operations on.
+	 * @param fields The fields to search within the data items.
+	 * @param options Optional search options.
+	 */
+	constructor(data: Array<T>, { fields, options }: TSearchProps<T>) {
+		this.data = data;
+		this.fields = fields;
+		this.options = options;
+	}
+
+	/**
+	 * Gets the sanitized search term by removing special characters and trimming whitespace.
+	 */
+	private get sanitizedTerm(): string {
+		return this.term?.trim()?.replace(specialCharRegex, '') ?? '';
+	}
+
+	/**
+	 * Gets the search keywords extracted from the sanitized search term.
+	 */
+	private get searchKeywords(): TSearchKeywords {
+		return getSearchKeywords(this.sanitizedTerm);
+	}
+
+	/**
+	 * Checks if there are normal search keywords.
+	 */
+	private get hasNormal(): boolean {
+		return this.searchKeywords.normal.length > 0;
+	}
+
+	/**
+	 * Checks if there are exact search keywords.
+	 */
+	private get hasExact(): boolean {
+		return this.searchKeywords.exact.length > 0;
+	}
+
+	/**
+	 * Checks if there are partial search keywords.
+	 */
+	private get hasPartial(): boolean {
+		return this.searchKeywords.partial.length > 0;
+	}
+
+	/**
+	 * Checks if there are exclude search keywords.
+	 */
+	private get hasExclude(): boolean {
+		return this.searchKeywords.exclude.length > 0;
+	}
+
+	/**
+	 * Gets the regular expression for normal search.
+	 */
+	private get normalSearchRegex(): RegExp {
+		return normalRegex(this.searchKeywords.normal);
+	}
+
+	/**
+	 * Gets the regular expression for exact search.
+	 */
+	private get exactSearchRegex(): RegExp {
+		return exactRegex(this.searchKeywords.exact);
+	}
+
+	/**
+	 * Gets the regular expression for partial search.
+	 */
+	private get partialSearchRegex(): RegExp {
+		return partialRegex(this.searchKeywords.partial);
+	}
+
+	/**
+	 * Gets the regular expression for exclude search.
+	 */
+	private get excludeSearchRegex(): RegExp {
+		return excludeRegex(this.searchKeywords.exclude);
+	}
+
+	/**
+	 * Gets the unique set of fields to search within the data items.
+	 */
+	private get setOfFields(): Array<Extract<keyof T, string>> {
+		return [...new Set(this.fields)];
+	}
+
+	/**
+	 * Counts the occurrences of a string in a regular expression match result.
+	 * @param result The regular expression match result.
+	 * @returns The count of occurrences.
+	 */
+	private countStringOccurrences(result: RegExpMatchArray) {
+		return countStringOccurrences(result);
+	}
+
+	/**
+	 * Highlights the fields in an item that match the search keywords.
+	 * @param item The item to highlight the fields in.
+	 * @param regexList The list of regular expressions to match against the fields.
+	 * @returns The item with highlighted fields.
+	 */
+	private highlightFields(item: T, regexList: Array<RegExp>): Partial<T> {
+		return highlightFields(this.setOfFields, item, regexList);
+	}
+
+	/**
+	 * Filters out null or undefined items from the search result.
+	 * @param item The item to filter.
+	 * @returns True if the item is not null or undefined, false otherwise.
+	 */
+	private notEmptyFilter(item: TScored<T> | null): boolean {
+		return notEmptyFilter(item);
+	}
+
+	/**
+	 * Sorts the search result items by score in descending order.
+	 * @param a The first item to compare.
+	 * @param b The second item to compare.
+	 * @returns A negative value if a should be sorted before b, a positive value if a should be sorted after b, or 0 if a and b are equal.
+	 */
+	private sortByScore(a: TScored<T>, b: TScored<T>): number {
+		return sortByScore(a, b);
+	}
+
+	/**
+	 * Performs a search operation on the dataset.
+	 * @param term The search term to be used for searching.
+	 * @returns A promise that resolves to an array of search result items.
+	 */
+	public async search(term?: string | null): Promise<Array<T>> {
+		this.term = term;
+
+		const clonedData = structuredClone(this.data);
+
+		if (!this.hasNormal && !this.hasExact && !this.hasPartial && !this.hasExclude) {
+			return clonedData;
+		}
 
 		const result = clonedData
 			.map<TScored<T> | null>((item) => {
-				const fieldsToMatch = setOfFields.map((field) => item[field]).join(' ');
+				const fieldsToMatch = this.setOfFields.map((field) => item[field]).join(' ');
 
-				const excludeResult = fieldsToMatch.match(excludeSearchRegex);
-				if (hasExclude && excludeResult) return null;
+				const excludeResult = fieldsToMatch.match(this.excludeSearchRegex);
+				if (this.hasExclude && excludeResult) return null;
 
-				const normalResult = fieldsToMatch.match(normalSearchRegex);
-				if (hasNormal && !normalResult) return null;
+				const normalResult = fieldsToMatch.match(this.normalSearchRegex);
+				if (this.hasNormal && !normalResult) return null;
 
-				const exactResult = fieldsToMatch.match(exactSearchRegex);
-				if (hasExact && !exactResult) return null;
+				const exactResult = fieldsToMatch.match(this.exactSearchRegex);
+				if (this.hasExact && !exactResult) return null;
 
-				const partialResult = fieldsToMatch.match(partialSearchRegex);
-				if (hasPartial && !partialResult) return null;
+				const partialResult = fieldsToMatch.match(this.partialSearchRegex);
+				if (this.hasPartial && !partialResult) return null;
 
 				let score = 0;
 
 				if (normalResult) {
 					const normalCount = normalResult?.length ?? 0;
-					const normalOccurrences = countStringOccurrences(normalResult);
+					const normalOccurrences = this.countStringOccurrences(normalResult);
 					if (normalCount) score += normalOccurrences.total * normalOccurrences.matches.length;
 				}
 
 				if (exactResult) {
 					const exactCount = exactResult?.length ?? 0;
-					const exactOccurrences = countStringOccurrences(exactResult);
+					const exactOccurrences = this.countStringOccurrences(exactResult);
 					if (exactCount) score += exactOccurrences.total * exactOccurrences.matches.length;
 				}
 
 				if (partialResult) {
 					const partialCount = partialResult?.length ?? 0;
-					const partialOccurrences = countStringOccurrences(partialResult);
+					const partialOccurrences = this.countStringOccurrences(partialResult);
 					if (partialCount) score += partialOccurrences.total * partialOccurrences.matches.length;
 				}
 
 				let mappedItem = { ...item, score };
 
-				if (options?.highlight) {
-					const highlightedFields = highlightFields(setOfFields, item, [
-						normalSearchRegex,
-						exactSearchRegex,
-						partialSearchRegex
+				if (this.options?.highlight) {
+					const highlightedFields = this.highlightFields(item, [
+						this.normalSearchRegex,
+						this.exactSearchRegex,
+						this.partialSearchRegex
 					]);
 
 					mappedItem = { ...mappedItem, ...highlightedFields };
@@ -163,9 +293,10 @@ export const search = <T = Array<any>>({
 
 				return mappedItem;
 			})
-			.filter(notEmptyFilter)
-			.sort(sortByScore)
-			.map(({ score, ...rest }) => rest as T);
+			.filter(this.notEmptyFilter);
 
-		return resolve(result);
-	});
+		return (result as Array<TScored<T>>)
+			.sort(this.sortByScore)
+			.map(({ score, ...rest }) => rest as T);
+	}
+}

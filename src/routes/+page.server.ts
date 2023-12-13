@@ -3,8 +3,8 @@ import {
 	endPerformance,
 	clearPerformance,
 	measurePerformance,
-	search,
 	sortByDate,
+	SearchEngine,
 	type TPerformanceMarkNames
 } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
@@ -16,22 +16,23 @@ export const load = async ({ fetch, url }) => {
 
 	const searchTerm = url.searchParams.get('search') ?? '';
 
-	const performanceMarkNames: TPerformanceMarkNames = {
-		start: `start-${searchTerm}`,
-		end: `end-${searchTerm}`,
-		duration: `duration-${searchTerm}`
-	};
+	const performanceMarkNames: TPerformanceMarkNames = [
+		`start-${searchTerm}`,
+		`end-${searchTerm}`,
+		`duration-${searchTerm}`
+	];
+	const [markNameStart, markNameEnd] = performanceMarkNames;
 
 	let elapsedTime = 0;
-	startPerformance(performanceMarkNames.start);
+	startPerformance(markNameStart);
 
-	const articles = await search({
-		data,
+	const articleSearchEngine = new SearchEngine(data, {
 		fields: ['title', 'description', 'content'],
-		term: searchTerm,
 		options: { highlight: Boolean(searchTerm) }
-	}).finally(() => {
-		endPerformance(performanceMarkNames.end);
+	});
+
+	const articles = await articleSearchEngine.search(searchTerm).finally(() => {
+		endPerformance(markNameEnd);
 		elapsedTime = measurePerformance(performanceMarkNames).duration;
 		clearPerformance(performanceMarkNames);
 	});
