@@ -7,7 +7,6 @@ import {
 	partialRegex,
 	excludeRegex,
 	notEmptyFilter,
-	sortByScore,
 	specialCharRegex,
 	countStringOccurrences,
 	highlightFields
@@ -64,7 +63,7 @@ export const getSearchKeywords = (value?: string | null): TSearchKeywords => {
  * Represents the properties for performing a search operation.
  * @template T The type of data being searched.
  */
-type TSearchProps<T> = {
+export type TSearchProps<T> = {
 	fields: Array<Extract<keyof T, string>>;
 	options?: {
 		highlight?: boolean;
@@ -75,7 +74,7 @@ type TSearchProps<T> = {
  * Represents a type that includes a score property.
  * @template T - The base type.
  */
-type TScored<T> = T & { score: number };
+export type TScored<T> = T & { score: number };
 
 /**
  * Represents a search engine that performs search operations on a given dataset.
@@ -220,27 +219,17 @@ export class SearchEngine<T> {
 	}
 
 	/**
-	 * Sorts the search result items by score in descending order.
-	 * @param a The first item to compare.
-	 * @param b The second item to compare.
-	 * @returns A negative value if a should be sorted before b, a positive value if a should be sorted after b, or 0 if a and b are equal.
-	 */
-	private sortByScore(a: TScored<T>, b: TScored<T>): number {
-		return sortByScore(a, b);
-	}
-
-	/**
 	 * Performs a search operation on the dataset.
 	 * @param term The search term to be used for searching.
 	 * @returns A promise that resolves to an array of search result items.
 	 */
-	public async search(term?: string | null): Promise<Array<T>> {
+	public async search(term?: string | null): Promise<Array<TScored<T>>> {
 		this.term = term;
 
 		const clonedData = structuredClone(this.data);
 
 		if (!this.hasNormal && !this.hasExact && !this.hasPartial && !this.hasExclude) {
-			return clonedData;
+			return clonedData.map((item) => ({ ...item, score: 0 })) as Array<TScored<T>>;
 		}
 
 		const result = clonedData
@@ -293,10 +282,8 @@ export class SearchEngine<T> {
 
 				return mappedItem;
 			})
-			.filter(this.notEmptyFilter);
+			.filter(this.notEmptyFilter) as Array<TScored<T>>;
 
-		return (result as Array<TScored<T>>)
-			.sort(this.sortByScore)
-			.map(({ score, ...rest }) => rest as T);
+		return result;
 	}
 }

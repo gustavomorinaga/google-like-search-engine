@@ -8,41 +8,36 @@
 		ListArticles
 	} from '$lib/layouts';
 	import { debounce, filterActiveFields } from '$lib/utils';
-	import type { TArticle, TArticleFields } from '$lib/ts';
-
-	const DEBOUNCE_SEARCH_TIME = 700;
+	import { DEFAULT_FIELDS_OBJECT, DEFAULT_PROPS } from '$lib/config';
+	import type { TArticle, TQuery } from '$lib/ts';
 
 	export let articles: Array<TArticle>;
 	export let elapsedTime: number;
 	let loading = false;
-	let searchParams = $page.url.searchParams;
-	let searchTerm = searchParams.get('search') ?? '';
-	let selectedFields: TArticleFields;
+	let { searchParams } = $page.url;
+	let search = (searchParams.get('search') as TQuery['search']) ?? DEFAULT_PROPS.query.search;
+	let sortBy = (searchParams.get('sortBy') as TQuery['sortBy']) ?? DEFAULT_PROPS.query.sortBy;
+	let selectedFields = DEFAULT_FIELDS_OBJECT;
 
 	$: elapsedTimeSeconds = elapsedTime / 1000;
 
-	const filterDebounce = debounce(async (fields: TArticleFields) => {
+	const searchDebounce = debounce(async () => {
 		loading = true;
 
-		const activeFields = Object.keys(filterActiveFields(fields)).join(',');
+		if (search) searchParams.set('search', search);
+		else searchParams.delete('search');
 
+		if (sortBy) searchParams.set('sortBy', sortBy);
+		else searchParams.delete('sortBy');
+
+		const activeFields = Object.keys(filterActiveFields(selectedFields)).join(',');
 		if (activeFields) searchParams.set('fields', activeFields);
 		else searchParams.delete('fields');
 
 		await handleUpdateSearch().finally(() => (loading = false));
-	}, DEBOUNCE_SEARCH_TIME);
+	}, DEFAULT_PROPS.ui.debounceTime);
 
-	const searchDebounce = debounce(async (term: string) => {
-		loading = true;
-
-		if (term) searchParams.set('search', term);
-		else searchParams.delete('search');
-
-		await handleUpdateSearch().finally(() => (loading = false));
-	}, DEBOUNCE_SEARCH_TIME);
-
-	const handleSearch = async () => await searchDebounce(searchTerm);
-	const handleFilter = async () => await filterDebounce(selectedFields);
+	const handleSearch = async () => await searchDebounce();
 	const handleUpdateSearch = async () => await goto(`/?${searchParams.toString()}`);
 </script>
 
@@ -74,12 +69,17 @@
 	<div class="search">
 		<InputSearchBar
 			placeholder="Type to search a article..."
-			bind:searchTerm
+			bind:search
 			bind:loading
 			on:input={handleSearch}
 		/>
 
-		<DropdownMenuFilters bind:selectedFields onSelectedFieldChange={handleFilter} />
+		<DropdownMenuFilters
+			bind:sortBy
+			bind:selectedFields
+			onSortByChange={handleSearch}
+			onSelectedFieldChange={handleSearch}
+		/>
 
 		<div class="ml-2">
 			<DialogInstructions />

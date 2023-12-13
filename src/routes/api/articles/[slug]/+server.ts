@@ -1,5 +1,5 @@
 import { error, json } from '@sveltejs/kit';
-import { SearchEngine } from '$lib/utils';
+import { SearchEngine, removeScore } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
 
 const DEFAULT_FIELDS: Array<keyof TArticle> = ['title', 'description', 'content'];
@@ -19,7 +19,7 @@ export const GET = async ({ url, params: { slug }, setHeaders }) => {
 		options: { highlight: Boolean(keywords) }
 	});
 
-	const [article] = await searchEngine.search(keywords);
+	const [article] = await searchEngine.search(keywords).then((res) => res.map(removeScore));
 
 	// cache for 5 minutes
 	setHeaders({

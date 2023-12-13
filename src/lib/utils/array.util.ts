@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 /**
  * Checks if a value is not null or undefined.
  * @param value - The value to check.
@@ -7,12 +9,22 @@ export const notEmptyFilter = <T>(value: T | null | undefined): value is T =>
 	value !== null && value !== undefined;
 
 /**
- * Sorts an array of objects by their createdAt property in descending order.
+ * Sorts an array of objects by their "createdAt" property in ascending order.
+ *
  * @param a - The first object to compare.
  * @param b - The second object to compare.
- * @returns A negative number if a should be placed before b, a positive number if a should be placed after b, or 0 if they have the same createdAt value.
+ * @returns A negative number if "a" is older than "b", a positive number if "a" is newer than "b", or 0 if they have the same creation date.
  */
-export const sortByDate = <T extends { createdAt: string }>(a: T, b: T): number =>
+export const sortByOldest = <T extends { createdAt: string }>(a: T, b: T): number =>
+	a.createdAt < b.createdAt ? -1 : 1;
+
+/**
+ * Sorts an array of objects by their `createdAt` property in descending order.
+ * @param a - The first object to compare.
+ * @param b - The second object to compare.
+ * @returns A negative number if `a` should be placed before `b`, a positive number if `a` should be placed after `b`, or 0 if they are equal.
+ */
+export const sortByNewest = <T extends { createdAt: string }>(a: T, b: T): number =>
 	a.createdAt > b.createdAt ? -1 : 1;
 
 /**
@@ -22,7 +34,7 @@ export const sortByDate = <T extends { createdAt: string }>(a: T, b: T): number 
  * @param b - The second object to compare.
  * @returns A negative number if `a` should be sorted before `b`, a positive number if `b` should be sorted before `a`, or 0 if they have the same score.
  */
-export const sortByScore = <T extends { score: number }>(a: T, b: T): number =>
+export const sortByRelevance = <T extends { score: number }>(a: T, b: T): number =>
 	a.score > b.score ? -1 : 1;
 
 /**
@@ -62,6 +74,14 @@ export const countStringOccurrences = <T extends Array<string>>(
 
 	return { matches, total: matches.reduce((acc, { occurrences }) => acc + occurrences, 0) };
 };
+
+/**
+ * Removes the 'score' property from an object of type T.
+ * @template T - The type of the object.
+ * @param {T} obj - The object from which to remove the 'score' property.
+ * @returns {Omit<T, 'score'>} - The object without the 'score' property.
+ */
+export const removeScore = <T>({ score, ...rest }: T & { score: number }): T => rest as T;
 
 /**
  * Highlights specified fields in an item by wrapping matching text with <mark> tags.

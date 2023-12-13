@@ -3,7 +3,7 @@
 	import { Input } from '$lib/components/ui/input';
 	import { Search } from 'lucide-svelte';
 
-	export let searchTerm: string;
+	export let search: string | null;
 	export let loading: boolean;
 	export let placeholder: string;
 </script>
@@ -13,7 +13,7 @@
 		<Search class="h-4 w-4" />
 	</div>
 
-	<Input type="text" {placeholder} class="pl-10" autofocus bind:value={searchTerm} on:input />
+	<Input type="text" {placeholder} class="pl-10" autofocus bind:value={search} on:input />
 
 	{#if loading}
 		<div class="loader" transition:blur>
