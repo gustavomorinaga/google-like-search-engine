@@ -3,39 +3,46 @@
 	import { HoverCardCreator } from '$lib/layouts';
 	import type { TCreator } from '$lib/ts';
 
-	const creator: Omit<TCreator, 'initials'> = {
+	const creator: TCreator = {
 		name: 'Gustavo Morinaga',
 		username: 'gustavomorinaga',
-		avatar: 'https://github.com/gustavomorinaga.png',
+		avatar: 'https://avatars.githubusercontent.com/u/47375774?v=4',
 		bio: 'Software Engineer | TypeScript | JavaScript | Node.js | SvelteKit | Next.js | Angular | MongoDB',
-		website: 'https://gustavomorinaga.dev/'
+		website: 'https://gustavomorinaga.dev/',
+		initials: () =>
+			creator.name
+				.split(' ')
+				.map(([letter]) => letter)
+				.join('')
 	};
-	const initials: TCreator['initials'] = creator.name
-		.split(' ')
-		.map(([letter]) => letter)
-		.join('');
 </script>
 
 <footer>
-	Developed with ❤ by
-	<HoverCard.Root>
-		<HoverCard.Trigger
-			href={creator.website}
-			target="_blank"
-			rel="noopener noreferrer"
-			class="font-semibold hover:underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-black"
-		>
-			@{creator.username}
-		</HoverCard.Trigger>
-		<HoverCard.Content side="top" sideOffset={24} class="w-80">
-			<HoverCardCreator creator={{ ...creator, initials }} />
-		</HoverCard.Content>
-	</HoverCard.Root>
-	© 2023
+	<div>
+		Developed with ❤ by
+		<HoverCard.Root>
+			<HoverCard.Trigger
+				href={creator.website}
+				target="_blank"
+				rel="noopener noreferrer"
+				class="font-semibold hover:underline underline-offset-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-black"
+			>
+				@{creator.username}
+			</HoverCard.Trigger>
+			<HoverCard.Content side="top" sideOffset={24} class="w-80">
+				<HoverCardCreator {creator} />
+			</HoverCard.Content>
+		</HoverCard.Root>
+		© 2023
+	</div>
 </footer>
 
 <style lang="postcss">
 	footer {
-		@apply container border-t border-border py-4 text-center;
+		@apply mt-auto block border-t border-border;
+
+		& > div {
+			@apply container py-4 text-center;
+		}
 	}
 </style>

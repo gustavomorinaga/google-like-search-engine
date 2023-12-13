@@ -8,7 +8,7 @@
 <div class="hover-card-creator">
 	<Avatar.Root>
 		<Avatar.Image src={creator.avatar} />
-		<Avatar.Fallback>{creator.initials}</Avatar.Fallback>
+		<Avatar.Fallback>{creator.initials()}</Avatar.Fallback>
 	</Avatar.Root>
 	<div>
 		<h4>@{creator.username}</h4>
