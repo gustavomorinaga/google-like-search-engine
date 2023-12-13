@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="flex flex-col gap-2">
-			<span>{formattedCreatedAt}</span>
+			<span class="text-sm text-muted-foreground">{formattedCreatedAt}</span>
 			<span
 				class="-translate-x-4 group-hover:translate-x-0 transition opacity-0 group-hover:opacity-100 ml-auto my-auto"
 			>

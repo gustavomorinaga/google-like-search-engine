@@ -43,7 +43,7 @@
 
 <style lang="postcss">
 	div.scroll-container {
-		@apply h-[50dvh] w-full overflow-y-auto;
+		@apply h-[58dvh] w-full overflow-y-auto;
 		@apply scroll-smooth will-change-scroll scrollbar-thin scrollbar-thumb-secondary;
 		contain: strict;
 

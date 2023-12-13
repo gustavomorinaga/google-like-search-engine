@@ -81,11 +81,12 @@
 			@apply mb-8 flex flex-wrap justify-between gap-x-16 gap-y-4 md:flex-nowrap;
 
 			& h1 {
-				@apply mb-4 text-4xl font-bold;
+				@apply mb-4 text-2xl font-bold md:text-4xl;
+				text-wrap: balance;
 			}
 
 			& p {
-				@apply text-lg text-muted-foreground;
+				@apply text-muted-foreground md:text-lg;
 				text-wrap: balance;
 			}
 

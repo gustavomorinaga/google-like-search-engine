@@ -55,20 +55,22 @@
 			@apply z-10 mb-8 border-b border-border;
 
 			& > h1 {
-				@apply mb-4 text-4xl font-bold;
+				@apply mb-4 text-2xl font-bold md:text-4xl;
+				text-wrap: balance;
 			}
 
 			& > p {
-				@apply mb-4 text-2xl text-muted-foreground;
+				@apply mb-4 text-lg text-muted-foreground md:text-2xl;
+				text-wrap: balance;
 			}
 
 			& > div.info {
-				@apply mb-2 flex flex-wrap items-center gap-2;
+				@apply mb-2 flex flex-wrap items-center gap-2 text-sm md:text-base;
 			}
 		}
 
 		& > span.content {
-			@apply z-10 block max-h-[50dvh] overflow-auto scroll-smooth
+			@apply z-10 mb-8 block max-h-[58dvh] overflow-auto scroll-smooth
 			will-change-scroll scrollbar-thin scrollbar-thumb-secondary;
 
 			& :global(h2) {
@@ -76,7 +78,7 @@
 			}
 
 			& :global(p) {
-				@apply mb-4;
+				@apply [&:not(:last-child)]:mb-4;
 			}
 		}
 	}
