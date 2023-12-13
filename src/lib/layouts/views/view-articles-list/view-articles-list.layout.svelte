@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
-	import { DialogInstructions, InputSearchBar, ListArticles } from '$lib/layouts';
+	import {
+		DialogInstructions,
+		DropdownMenuFilters,
+		InputSearchBar,
+		ListArticles
+	} from '$lib/layouts';
 	import { debounce } from '$lib/utils';
 	import type { TArticle } from '$lib/ts';
 
@@ -55,12 +60,15 @@
 
 	<div class="search">
 		<InputSearchBar
+			placeholder="Type to search a article..."
 			bind:searchTerm
 			bind:loading
-			placeholder="Type to search a article..."
 			on:input={handleSearch}
 		/>
-		<div class="ml-auto">
+
+		<DropdownMenuFilters />
+
+		<div class="ml-2">
 			<DialogInstructions />
 		</div>
 	</div>
@@ -96,7 +104,7 @@
 		}
 
 		& > div.search {
-			@apply flex items-center justify-stretch gap-4;
+			@apply flex items-center justify-stretch gap-2;
 		}
 
 		& > div.benchmarks {

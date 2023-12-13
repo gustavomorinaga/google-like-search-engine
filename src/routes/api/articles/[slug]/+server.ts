@@ -2,8 +2,11 @@ import { error, json } from '@sveltejs/kit';
 import { SearchEngine } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
 
+const DEFAULT_FIELDS: Array<keyof TArticle> = ['title', 'description', 'content'];
+
 export const GET = async ({ url, params: { slug }, setHeaders }) => {
 	const keywords = url.searchParams.get('keywords') ?? '';
+	const selectedFields = url.searchParams.get('fields')?.split(',') ?? DEFAULT_FIELDS;
 
 	const data = await fetch(`${url.origin}/db/articles.data.json`)
 		.then<Array<TArticle>>((res) => res.json())
@@ -12,7 +15,7 @@ export const GET = async ({ url, params: { slug }, setHeaders }) => {
 	if (!data) throw error(404, 'Not found');
 
 	const searchEngine = new SearchEngine([data], {
-		fields: ['title', 'description', 'content'],
+		fields: selectedFields as Array<keyof TArticle>,
 		options: { highlight: Boolean(keywords) }
 	});
 
