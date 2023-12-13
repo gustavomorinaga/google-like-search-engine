@@ -7,7 +7,7 @@
 		InputSearchBar,
 		ListArticles
 	} from '$lib/layouts';
-	import { debounce } from '$lib/utils';
+	import { debounce, filterActiveFields } from '$lib/utils';
 	import type { TArticle, TArticleFields } from '$lib/ts';
 
 	const DEBOUNCE_SEARCH_TIME = 700;
@@ -24,16 +24,12 @@
 	const filterDebounce = debounce(async (fields: TArticleFields) => {
 		loading = true;
 
-		const activeFields = Object.entries(fields)
-			.filter(([, value]) => value)
-			.map(([key]) => key)
-			.join(',');
+		const activeFields = Object.keys(filterActiveFields(fields)).join(',');
 
 		if (activeFields) searchParams.set('fields', activeFields);
 		else searchParams.delete('fields');
 
-		const url = `/?${searchParams.toString()}`;
-		await goto(url).finally(() => (loading = false));
+		await handleUpdateSearch().finally(() => (loading = false));
 	}, DEBOUNCE_SEARCH_TIME);
 
 	const searchDebounce = debounce(async (term: string) => {
@@ -42,12 +38,12 @@
 		if (term) searchParams.set('search', term);
 		else searchParams.delete('search');
 
-		const url = `/?${searchParams.toString()}`;
-		await goto(url).finally(() => (loading = false));
+		await handleUpdateSearch().finally(() => (loading = false));
 	}, DEBOUNCE_SEARCH_TIME);
 
 	const handleSearch = async () => await searchDebounce(searchTerm);
 	const handleFilter = async () => await filterDebounce(selectedFields);
+	const handleUpdateSearch = async () => await goto(`/?${searchParams.toString()}`);
 </script>
 
 <section>

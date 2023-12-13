@@ -1,3 +1,6 @@
+/**
+ * Represents an article.
+ */
 export type TArticle = {
 	id: number;
 	slug: string;
