@@ -41,17 +41,18 @@ Casos que o motor de busca deve ser capaz de lidar:
 
 ## Pilha Tecnológica
 
-| Ferramenta/Serviço                              | Categoria                         | Descrição                                                                                                           |
-| ----------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| [Vite](https://vitejs.dev/)                     | Ferramentas de Compilação         | Uma ferramenta de compilação que oferece uma experiência de desenvolvimento mais rápida para projetos web modernos. |
-| [CSSNANO](https://cssnano.co/)                  | CSS                               | Um minificador modular, construído em cima do ecossistema PostCSS.                                                  |
-| [PostCSS](https://postcss.org)                  | CSS                               | Uma ferramenta para transformar CSS com JavaScript.                                                                 |
-| [Tailwind CSS](https://tailwindcss.com/)        | CSS                               | Um framework CSS de utilidade em primeiro lugar.                                                                    |
-| [ESLint](https://eslint.org/)                   | Ferramentas JavaScript/TypeScript | Uma ferramenta para identificar e relatar padrões no código ECMAScript/JavaScript.                                  |
-| [Prettier](https://prettier.io/)                | Ferramentas JavaScript/TypeScript | Um formatador de código com opiniões.                                                                               |
-| [TypeScript](https://www.typescriptlang.org/)   | Ferramentas JavaScript/TypeScript | Um conjunto tipado de JavaScript que compila para JavaScript simples.                                               |
-| [shadcn-svelte](https://www.shadcn-svelte.com/) | Componentes UI                    | Componentes acessíveis e personalizáveis que você pode copiar e colar em seus aplicativos.                          |
-| [SvelteKit](https://kit.svelte.dev/)            | Frameworks Web                    | Um framework para construir aplicativos web de alta performance.                                                    |
+| Ferramenta/Serviço                                | Categoria                         | Descrição                                                                                                           |
+| ------------------------------------------------- | --------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| [Vite](https://vitejs.dev/)                       | Ferramentas de Compilação         | Uma ferramenta de compilação que oferece uma experiência de desenvolvimento mais rápida para projetos web modernos. |
+| [CSSNANO](https://cssnano.co/)                    | CSS                               | Um minificador modular, construído em cima do ecossistema PostCSS.                                                  |
+| [PostCSS](https://postcss.org)                    | CSS                               | Uma ferramenta para transformar CSS com JavaScript.                                                                 |
+| [Tailwind CSS](https://tailwindcss.com/)          | CSS                               | Um framework CSS de utilidade em primeiro lugar.                                                                    |
+| [ESLint](https://eslint.org/)                     | Ferramentas JavaScript/TypeScript | Uma ferramenta para identificar e relatar padrões no código ECMAScript/JavaScript.                                  |
+| [Prettier](https://prettier.io/)                  | Ferramentas JavaScript/TypeScript | Um formatador de código com opiniões.                                                                               |
+| [TypeScript](https://www.typescriptlang.org/)     | Ferramentas JavaScript/TypeScript | Um conjunto tipado de JavaScript que compila para JavaScript simples.                                               |
+| [shadcn-svelte](https://www.shadcn-svelte.com/)   | Componentes UI                    | Componentes acessíveis e personalizáveis que você pode copiar e colar em seus aplicativos.                          |
+| [TanStack Virtual](https://tanstack.com/virtual/) | UI Components                     | Headless UI para Virtualizar Grandes Listas de Elementos                                                            |
+| [SvelteKit](https://kit.svelte.dev/)              | Frameworks Web                    | Um framework para construir aplicativos web de alta performance.                                                    |
 
 ## 📜 Licença
 

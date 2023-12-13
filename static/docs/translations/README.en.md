@@ -42,17 +42,18 @@ Cases that the search engine must be able to handle:
 
 ## Tech Stack
 
-| Tool/Service                                    | Category                    | Description                                                                         |
-| ----------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
-| [Vite](https://vitejs.dev/)                     | Build Tools                 | A build tool that provides a faster development experience for modern web projects. |
-| [CSSNANO](https://cssnano.co/)                  | CSS                         | A modular minifier, built on top of the PostCSS ecosystem.                          |
-| [PostCSS](https://postcss.org)                  | CSS                         | A tool for transforming CSS with JavaScript.                                        |
-| [Tailwind CSS](https://tailwindcss.com/)        | CSS                         | A utility-first CSS framework.                                                      |
-| [ESLint](https://eslint.org/)                   | JavaScript/TypeScript Tools | A tool for identifying and reporting on patterns in ECMAScript/JavaScript code.     |
-| [Prettier](https://prettier.io/)                | JavaScript/TypeScript Tools | An opinionated code formatter.                                                      |
-| [TypeScript](https://www.typescriptlang.org/)   | JavaScript/TypeScript Tools | A typed superset of JavaScript that compiles to plain JavaScript.                   |
-| [shadcn-svelte](https://www.shadcn-svelte.com/) | UI Components               | Accessible and customizable components that you can copy and paste into your apps.  |
-| [SvelteKit](https://kit.svelte.dev/)            | Web Frameworks              | A framework for building high-performance web apps.                                 |
+| Tool/Service                                      | Category                    | Description                                                                         |
+| ------------------------------------------------- | --------------------------- | ----------------------------------------------------------------------------------- |
+| [Vite](https://vitejs.dev/)                       | Build Tools                 | A build tool that provides a faster development experience for modern web projects. |
+| [CSSNANO](https://cssnano.co/)                    | CSS                         | A modular minifier, built on top of the PostCSS ecosystem.                          |
+| [PostCSS](https://postcss.org)                    | CSS                         | A tool for transforming CSS with JavaScript.                                        |
+| [Tailwind CSS](https://tailwindcss.com/)          | CSS                         | A utility-first CSS framework.                                                      |
+| [ESLint](https://eslint.org/)                     | JavaScript/TypeScript Tools | A tool for identifying and reporting on patterns in ECMAScript/JavaScript code.     |
+| [Prettier](https://prettier.io/)                  | JavaScript/TypeScript Tools | An opinionated code formatter.                                                      |
+| [TypeScript](https://www.typescriptlang.org/)     | JavaScript/TypeScript Tools | A typed superset of JavaScript that compiles to plain JavaScript.                   |
+| [shadcn-svelte](https://www.shadcn-svelte.com/)   | UI Components               | Accessible and customizable components that you can copy and paste into your apps.  |
+| [TanStack Virtual](https://tanstack.com/virtual/) | UI Components               | Headless UI for Virtualizing Large Element Lists                                    |
+| [SvelteKit](https://kit.svelte.dev/)              | Web Frameworks              | A framework for building high-performance web apps.                                 |
 
 ## 📜 License
 
