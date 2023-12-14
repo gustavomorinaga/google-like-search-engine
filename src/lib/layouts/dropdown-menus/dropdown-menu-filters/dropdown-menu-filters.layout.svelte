@@ -33,7 +33,7 @@
 
 <DropdownMenu.Root closeOnItemClick={false}>
 	<DropdownMenu.Trigger asChild let:builder>
-		<Button size="icon" variant="outline" builders={[builder]}>
+		<Button size="icon" variant="outline" builders={[builder]} title="Filters">
 			<Filter class="w-4 h-4" />
 		</Button>
 	</DropdownMenu.Trigger>
