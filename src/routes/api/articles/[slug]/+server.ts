@@ -1,12 +1,12 @@
 import { error, json } from '@sveltejs/kit';
+import { DEFAULT_FIELDS_QUERY } from '$lib/config';
 import { SearchEngine, removeScore } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
 
-const DEFAULT_FIELDS: Array<keyof TArticle> = ['title', 'description', 'content'];
-
 export const GET = async ({ url, params: { slug }, setHeaders }) => {
 	const keywords = url.searchParams.get('search') ?? '';
-	const selectedFields = url.searchParams.get('fields')?.split(',') ?? DEFAULT_FIELDS;
+	const selectedFields =
+		(url.searchParams.get('fields')?.split(',') as Array<keyof TArticle>) ?? DEFAULT_FIELDS_QUERY;
 
 	const data = await fetch(`${url.origin}/db/articles.data.json`)
 		.then<Array<TArticle>>((res) => res.json())
