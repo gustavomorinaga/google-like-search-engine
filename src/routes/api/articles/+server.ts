@@ -10,7 +10,7 @@ const sortByMapping = {
 } as const;
 
 export const GET = async ({ fetch, url, setHeaders }) => {
-	const searchTerm = url.searchParams.get('search') ?? DEFAULT_PROPS.query.search;
+	const term = url.searchParams.get('search') ?? DEFAULT_PROPS.query.search;
 	const sortBy = (url.searchParams.get('sortBy') as TQuery['sortBy']) ?? DEFAULT_PROPS.query.sortBy;
 	const selectedFields =
 		(url.searchParams.get('fields')?.split(',') as Array<keyof TArticle>) ?? DEFAULT_FIELDS_QUERY;
@@ -21,11 +21,11 @@ export const GET = async ({ fetch, url, setHeaders }) => {
 
 	const searchEngine = new SearchEngine(data, {
 		fields: selectedFields as Array<keyof TArticle>,
-		options: { highlight: Boolean(searchTerm) }
+		options: { highlight: Boolean(term) }
 	});
 
 	const result = await searchEngine
-		.search(searchTerm)
+		.search(term)
 		.then((res) => res.sort(sortByMapping[sortBy]).map(removeScore));
 
 	// cache for 5 minutes

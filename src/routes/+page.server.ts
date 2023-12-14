@@ -12,18 +12,18 @@ export const load = async ({ fetch, url, setHeaders }) => {
 
 	searchPerformance.startPerformance();
 
-	const articles = await fetch(`/api/articles?${url.searchParams.toString()}`).finally(() => {
+	const fetchedArticles = await fetch(`/api/articles${url.search}`).finally(() => {
 		searchPerformance.endPerformance();
 		searchPerformance.measurePerformance();
 		searchPerformance.clearPerformance();
 	});
 
+	const articles = (await fetchedArticles.json()) as Array<TArticle>;
+	const elapsedTime = searchPerformance.getElapsedTime();
+
 	setHeaders({
-		'cache-control': articles.headers.get('cache-control') ?? ''
+		'cache-control': fetchedArticles.headers.get('cache-control') ?? ''
 	});
 
-	return {
-		articles: (await articles.json()) as Promise<Array<TArticle>>,
-		elapsedTime: searchPerformance.getElapsedTime()
-	};
+	return { articles, elapsedTime };
 };

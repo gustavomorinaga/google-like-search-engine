@@ -4,7 +4,7 @@ import { SearchEngine, removeScore } from '$lib/utils';
 import type { TArticle } from '$lib/ts';
 
 export const GET = async ({ url, params: { slug }, setHeaders }) => {
-	const keywords = url.searchParams.get('search') ?? '';
+	const term = url.searchParams.get('search') ?? '';
 	const selectedFields =
 		(url.searchParams.get('fields')?.split(',') as Array<keyof TArticle>) ?? DEFAULT_FIELDS_QUERY;
 
@@ -17,10 +17,10 @@ export const GET = async ({ url, params: { slug }, setHeaders }) => {
 
 	const searchEngine = new SearchEngine([data], {
 		fields: selectedFields as Array<keyof TArticle>,
-		options: { highlight: Boolean(keywords) }
+		options: { highlight: Boolean(term) }
 	});
 
-	const [article] = await searchEngine.search(keywords).then((res) => res.map(removeScore));
+	const [article] = await searchEngine.search(term).then((res) => res.map(removeScore));
 
 	// cache for 5 minutes
 	setHeaders({

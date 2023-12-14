@@ -2,12 +2,14 @@ import { redirect } from '@sveltejs/kit';
 import type { TArticle } from '$lib/ts';
 
 export const load = async ({ fetch, url, params: { slug }, setHeaders }) => {
-	const article = await fetch(`/api/articles/${slug}?${url.searchParams.toString()}`);
-	if (!article.ok) throw redirect(301, '/');
+	const fetchedArticle = await fetch(`/api/articles/${slug}${url.search}`);
+	if (!fetchedArticle.ok) throw redirect(301, '/');
+
+	const article = (await fetchedArticle.json()) as TArticle;
 
 	setHeaders({
-		'cache-control': article.headers.get('cache-control') ?? ''
+		'cache-control': fetchedArticle.headers.get('cache-control') ?? ''
 	});
 
-	return { article: (await article.json()) as Promise<TArticle> };
+	return { article };
 };

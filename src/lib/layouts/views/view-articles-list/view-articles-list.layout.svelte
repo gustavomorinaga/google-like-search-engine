@@ -34,11 +34,12 @@
 		if (activeFields) searchParams.set('fields', activeFields);
 		else searchParams.delete('fields');
 
-		await handleUpdateSearch().finally(() => (loading = false));
+		await handleUpdateSearchParams().finally(() => (loading = false));
 	}, DEFAULT_PROPS.ui.debounceTime);
 
 	const handleSearch = async () => await searchDebounce();
-	const handleUpdateSearch = async () => await goto(`/?${searchParams.toString()}`);
+	const handleUpdateSearchParams = async () =>
+		await goto(`/?${searchParams.toString()}`, { invalidateAll: true });
 </script>
 
 <section>
