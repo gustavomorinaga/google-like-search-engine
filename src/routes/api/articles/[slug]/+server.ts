@@ -10,7 +10,8 @@ export const GET = async ({ url, params: { slug }, setHeaders }) => {
 
 	const data = await fetch(`${url.origin}/db/articles.data.json`)
 		.then<Array<TArticle>>((res) => res.json())
-		.then((articles) => articles.find((article) => article.slug === slug));
+		.then((articles) => articles.find((article) => article.slug === slug))
+		.catch(() => undefined);
 
 	if (!data) throw error(404, 'Not found');
 

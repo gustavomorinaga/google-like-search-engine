@@ -15,9 +15,9 @@ export const GET = async ({ fetch, url, setHeaders }) => {
 	const selectedFields =
 		(url.searchParams.get('fields')?.split(',') as Array<keyof TArticle>) ?? DEFAULT_FIELDS_QUERY;
 
-	const data = await fetch(`${url.origin}/db/articles.data.json`).then<Array<TArticle>>((res) =>
-		res.json()
-	);
+	const data = await fetch(`${url.origin}/db/articles.data.json`)
+		.then<Array<TArticle>>((res) => res.json())
+		.catch<Array<TArticle>>(() => []);
 
 	const searchEngine = new SearchEngine(data, {
 		fields: selectedFields as Array<keyof TArticle>,
