@@ -26,7 +26,7 @@ export const GET = async ({ fetch, url, setHeaders }) => {
 
 	const result = await searchEngine
 		.search(searchTerm)
-		.then((res) => res.toSorted(sortByMapping[sortBy]).map(removeScore));
+		.then((res) => res.sort(sortByMapping[sortBy]).map(removeScore));
 
 	// cache for 5 minutes
 	setHeaders({
