@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { blur } from 'svelte/transition';
+	import { fade } from 'svelte/transition';
 	import { Input } from '$lib/components/ui/input';
-	import { Search } from 'lucide-svelte';
+	import { Loader2, Search } from 'lucide-svelte';
 
 	export let search: string | null;
 	export let loading: boolean;
@@ -16,9 +16,8 @@
 	<Input type="text" {placeholder} class="pl-10" autofocus bind:value={search} on:input />
 
 	{#if loading}
-		<div class="loader" transition:blur>
-			<span class="spinner">⏳</span>
-			<span class="message">Loading...</span>
+		<div class="loader" transition:fade>
+			<Loader2 class="text-primary w-6 h-6 animate-spin" />
 		</div>
 	{/if}
 </div>
@@ -33,16 +32,8 @@
 		}
 
 		& > div.loader {
-			@apply absolute right-3 top-1/2 -translate-y-1/2 transform rounded-md bg-muted px-3;
+			@apply absolute right-3 top-1/2 -translate-y-1/2 transform;
 			@apply pointer-events-none flex items-center gap-2;
-
-			& > span.spinner {
-				@apply origin-center animate-spin;
-			}
-
-			& > span.message {
-				@apply text-sm text-muted-foreground;
-			}
 		}
 	}
 </style>

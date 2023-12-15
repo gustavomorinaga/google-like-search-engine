@@ -92,7 +92,7 @@
 		<span>({elapsedTimeSeconds.toFixed(3)} seconds)</span>
 	</div>
 
-	<ListArticles {articles} />
+	<ListArticles {articles} {loading} />
 </section>
 
 <style lang="postcss">
