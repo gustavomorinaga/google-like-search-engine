@@ -39,7 +39,7 @@
 
 <style lang="postcss">
 	footer {
-		@apply mt-auto block border-t border-border bg-background;
+		@apply relative z-10 mt-auto block border-t border-border bg-background;
 
 		& > div {
 			@apply container py-4 text-center text-sm;

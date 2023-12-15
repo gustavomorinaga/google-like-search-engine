@@ -97,7 +97,7 @@
 
 <style lang="postcss">
 	section {
-		@apply mt-4 block h-full md:mt-[10dvh];
+		@apply block h-full pt-4 md:pt-[10dvh];
 
 		& > header {
 			@apply mb-8 flex flex-wrap justify-between gap-x-16 gap-y-4 md:flex-nowrap;
