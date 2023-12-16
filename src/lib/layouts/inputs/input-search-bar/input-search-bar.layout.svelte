@@ -4,7 +4,7 @@
 	import { Loader2, Search } from 'lucide-svelte';
 
 	export let search: string | null;
-	export let loading: boolean;
+	export let debouncing: boolean = false;
 	export let placeholder: string;
 </script>
 
@@ -15,7 +15,7 @@
 
 	<Input type="text" {placeholder} class="pl-10" autofocus bind:value={search} on:input />
 
-	{#if loading}
+	{#if debouncing}
 		<div class="loader" transition:fade>
 			<Loader2 class="text-primary w-6 h-6 animate-spin" />
 		</div>

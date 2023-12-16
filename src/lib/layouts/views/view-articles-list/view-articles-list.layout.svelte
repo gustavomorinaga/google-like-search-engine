@@ -14,6 +14,7 @@
 	export let articles: Array<TArticle>;
 	export let elapsedTime: number;
 	let loading = false;
+	let debouncing = false;
 	let { searchParams } = $page.url;
 	let search = (searchParams.get('search') as TQuery['search']) ?? DEFAULT_PROPS.query.search;
 	let sortBy = (searchParams.get('sortBy') as TQuery['sortBy']) ?? DEFAULT_PROPS.query.sortBy;
@@ -22,6 +23,7 @@
 	$: elapsedTimeSeconds = elapsedTime / 1000;
 
 	const searchDebounce = debounce(async () => {
+		debouncing = false;
 		loading = true;
 
 		if (search) searchParams.set('search', search);
@@ -37,7 +39,10 @@
 		await handleUpdateSearchParams().finally(() => (loading = false));
 	}, DEFAULT_PROPS.ui.debounceTime);
 
-	const handleSearch = async () => await searchDebounce();
+	const handleSearch = async () => {
+		debouncing = true;
+		return await searchDebounce();
+	};
 	const handleUpdateSearchParams = async () =>
 		await goto(`/?${searchParams.toString()}`, { invalidateAll: true });
 </script>
@@ -71,7 +76,7 @@
 		<InputSearchBar
 			placeholder="Type to search a article..."
 			bind:search
-			bind:loading
+			bind:debouncing
 			on:input={handleSearch}
 		/>
 
