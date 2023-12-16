@@ -1,6 +1,6 @@
 {
 	"name": "google-like-search-engine",
-	"version": "1.1.1",
+	"version": "1.2.1",
 	"private": true,
 	"type": "module",
 	"author": "Gustavo Morinaga <me@gustavomorinaga.dev>",
@@ -18,8 +18,9 @@
 		"clean": "del-cli ./**/node_modules/ ./**/.svelte-kit/"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "2.1.1",
-		"@sveltejs/kit": "1.30.2",
+		"@sveltejs/adapter-auto": "3.0.0",
+		"@sveltejs/kit": "2.0.0",
+		"@sveltejs/vite-plugin-svelte": "3.0.0",
 		"@tanstack/svelte-virtual": "3.0.1",
 		"@typescript-eslint/eslint-plugin": "6.14.0",
 		"@typescript-eslint/parser": "6.14.0",
@@ -40,7 +41,7 @@
 		"tailwindcss": "3.3.6",
 		"tslib": "2.6.2",
 		"typescript": "5.3.3",
-		"vite": "4.4.2"
+		"vite": "5.0.3"
 	},
 	"dependencies": {
 		"bits-ui": "0.11.7",
