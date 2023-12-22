@@ -4,17 +4,18 @@
 	import { Loader2 } from 'lucide-svelte';
 	import { createVirtualizer } from '@tanstack/svelte-virtual';
 	import { CardArticle, FeedbackArticleNotFound } from '$lib/layouts';
-	import type { TArticle } from '$lib/ts';
+	import { getArticleState } from '$lib/stores';
 
-	export let articles: Array<TArticle>;
-	export let virtualItemsRef: Array<HTMLLIElement> = [];
-	export let loading = false;
+	const state = getArticleState();
+
+	let virtualItemsRef: Array<HTMLLIElement> = [];
 	let virtualListRef: HTMLDivElement;
 
-	$: searchParams = $page.url.searchParams;
-	$: hasArticles = articles.length > 0;
+	$: searchString = $page.url.search;
+	$: articles = $state.articles;
+	$: hasArticles = $state.metadata.count > 0;
 	$: virtualizer = createVirtualizer<HTMLDivElement, HTMLLIElement>({
-		count: articles.length,
+		count: $state.metadata.count,
 		getScrollElement: () => virtualListRef,
 		estimateSize: () => 100,
 		overscan: 5,
@@ -25,7 +26,7 @@
 </script>
 
 <div class="list">
-	{#if loading}
+	{#if $state.loading}
 		<div class="loader" transition:fade>
 			<Loader2 class="text-primary w-16 h-16 animate-spin drop-shadow" />
 		</div>
@@ -37,11 +38,10 @@
 				<ul style="transform: translateY({items[0] ? items[0].start : 0}px);">
 					{#each items as row, index (row.index)}
 						{@const article = articles[row.index]}
+						{@const href = `/${article.slug}${searchString}`}
 
 						<li bind:this={virtualItemsRef[index]} data-index={row.index}>
-							<a href="/{article.slug}?{searchParams.toString()}">
-								<CardArticle {article} />
-							</a>
+							<a {href}><CardArticle {article} /></a>
 						</li>
 					{/each}
 				</ul>

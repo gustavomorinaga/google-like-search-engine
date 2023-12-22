@@ -9,22 +9,22 @@
 	} from '$lib/layouts';
 	import { debounce, filterActiveFields } from '$lib/utils';
 	import { DEFAULT_FIELDS_OBJECT, DEFAULT_PROPS } from '$lib/config';
-	import type { TArticle, TQuery } from '$lib/ts';
+	import { getArticleState } from '$lib/stores';
+	import type { TQuery } from '$lib/ts';
 
-	export let articles: Array<TArticle>;
-	export let elapsedTime: number;
-	let loading = false;
-	let debouncing = false;
+	const state = getArticleState();
+
 	let { searchParams } = $page.url;
+	let debouncing = false;
 	let search = (searchParams.get('search') as TQuery['search']) ?? DEFAULT_PROPS.query.search;
 	let sortBy = (searchParams.get('sortBy') as TQuery['sortBy']) ?? DEFAULT_PROPS.query.sortBy;
 	let selectedFields = DEFAULT_FIELDS_OBJECT;
 
-	$: elapsedTimeSeconds = elapsedTime / 1000;
+	$: elapsedTimeSeconds = $state.metadata.elapsedTime / 1000;
 
 	const searchDebounce = debounce(async () => {
 		debouncing = false;
-		loading = true;
+		$state.loading = true;
 
 		if (search) searchParams.set('search', search);
 		else searchParams.delete('search');
@@ -36,13 +36,14 @@
 		if (activeFields) searchParams.set('fields', activeFields);
 		else searchParams.delete('fields');
 
-		await handleUpdateSearchParams().finally(() => (loading = false));
+		return await handleUpdateSearchParams().finally(() => ($state.loading = false));
 	}, DEFAULT_PROPS.ui.debounceTime);
 
 	const handleSearch = async () => {
 		debouncing = true;
 		return await searchDebounce();
 	};
+
 	const handleUpdateSearchParams = async () =>
 		await goto(`/?${searchParams.toString()}`, { invalidateAll: true });
 </script>
@@ -93,11 +94,11 @@
 	</div>
 
 	<div class="benchmarks">
-		<span>Approximately {articles.length} results</span>
+		<span>Approximately {$state.metadata.count} results</span>
 		<span>({elapsedTimeSeconds.toFixed(3)} seconds)</span>
 	</div>
 
-	<ListArticles {articles} {loading} />
+	<ListArticles />
 </section>
 
 <style lang="postcss">

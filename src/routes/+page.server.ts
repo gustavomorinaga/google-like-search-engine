@@ -20,10 +20,11 @@ export const load = async ({ fetch, url, setHeaders }) => {
 
 	const articles = (await fetchedArticles.json()) as Array<TArticle>;
 	const elapsedTime = searchPerformance.getElapsedTime();
+	const metadata = { count: articles.length, elapsedTime };
 
 	setHeaders({
 		'cache-control': fetchedArticles.headers.get('cache-control') ?? ''
 	});
 
-	return { articles, elapsedTime };
+	return { metadata, articles };
 };

@@ -9,6 +9,11 @@ export const emptyRegex = new RegExp('^$', 'gi');
 export const specialCharRegex = new RegExp("[`!#%^&*()_=[\\]{};':|,.<>/?~]", 'gi');
 
 /**
+ * Regular expression for matching HTML tags.
+ */
+export const htmlRegex = new RegExp('(<([^>]+)>)', 'gi');
+
+/**
  * Creates a regular expression for highlighting specific values in a string.
  * @param values - An array of strings to be highlighted.
  * @returns A regular expression that matches the values and wraps them in <mark> tags.

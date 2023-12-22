@@ -1,19 +1,20 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Separator } from '$lib/components/ui/separator';
+	import { getArticleState } from '$lib/stores';
 	import { ArrowLeft } from 'lucide-svelte';
 	import type { TArticle } from '$lib/ts';
 
-	export let article: TArticle;
-	const { cover, title, description, author, createdAt, updatedAt, content } = article;
+	const state = getArticleState();
+	const article = $state.currentArticle as TArticle;
 
-	const formattedCreatedAt = new Date(createdAt).toDateString();
-	const formattedUpdatedAt = new Date(updatedAt).toDateString();
+	const formattedCreatedAt = new Date(article.createdAt).toDateString();
+	const formattedUpdatedAt = new Date(article.updatedAt).toDateString();
 </script>
 
 <article>
 	<figure class="cover">
-		<img src={cover} alt={description} />
+		<img src={article.cover} alt={article.description} />
 	</figure>
 
 	<Button size="sm" variant="outline" class="mb-8" href="/">
@@ -22,11 +23,11 @@
 	</Button>
 
 	<header>
-		<h1>{@html title}</h1>
-		<p>{@html description}</p>
+		<h1>{@html article.title}</h1>
+		<p>{@html article.description}</p>
 
 		<div class="info">
-			<span>By {@html author}</span>
+			<span>By {@html article.author}</span>
 			<Separator orientation="vertical" class="h-6" />
 			<span>Published at {formattedCreatedAt}</span>
 			<Separator orientation="vertical" class="h-6" />
@@ -34,7 +35,7 @@
 		</div>
 	</header>
 
-	<span class="content">{@html content}</span>
+	<span class="content">{@html article.content}</span>
 </article>
 
 <style lang="postcss">

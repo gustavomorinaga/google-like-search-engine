@@ -1,16 +1,21 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { ViewArticle } from '$lib/layouts';
+	import { getArticleState } from '$lib/stores';
 	import { sanitize } from '$lib/utils';
 
 	export let data;
 	const { article } = data;
-	const sanitizedTitle = browser && sanitize(article.title);
+
+	const title = sanitize(article.title);
+	const description = article.description;
+
+	const state = getArticleState();
+	$state.currentArticle = article;
 </script>
 
 <svelte:head>
-	<title>{sanitizedTitle} | Google-Like Search Engine</title>
-	<meta name="description" content={article.description} />
+	<title>{title} | Google-Like Search Engine</title>
+	<meta name="description" content={description} />
 </svelte:head>
 
-<ViewArticle {article} />
+<ViewArticle />

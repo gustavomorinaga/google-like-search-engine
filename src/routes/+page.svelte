@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { ViewArticlesList } from '$lib/layouts';
+	import { getArticleState } from '$lib/stores';
 
 	export let data;
-	$: ({ articles, elapsedTime } = data);
+
+	const state = getArticleState();
+	$: if (data) $state = { ...$state, metadata: data.metadata, articles: data.articles };
 </script>
 
 <svelte:head>
@@ -13,4 +16,4 @@
 	/>
 </svelte:head>
 
-<ViewArticlesList {articles} {elapsedTime} />
+<ViewArticlesList />

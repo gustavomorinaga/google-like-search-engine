@@ -1,10 +1,11 @@
+import { htmlRegex } from '$lib/utils';
+
 /**
- * Sanitizes the given value by parsing it as HTML and returning the text content of the body.
- * @param value - The value to sanitize.
- * @returns The sanitized value.
+ * Sanitizes a string by removing HTML tags.
+ *
+ * @param value - The string to be sanitized.
+ * @returns The sanitized string.
  */
 export const sanitize = (value: string): string => {
-	const parser = new DOMParser();
-	const dom = parser.parseFromString(value, 'text/html');
-	return dom.body.textContent || '';
+	return value.replace(htmlRegex, '') || '';
 };
