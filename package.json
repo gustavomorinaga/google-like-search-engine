@@ -18,7 +18,7 @@
 		"clean": "del-cli ./**/node_modules/ ./**/.svelte-kit/"
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "3.0.0",
+		"@sveltejs/adapter-auto": "6.0.1",
 		"@sveltejs/kit": "2.0.0",
 		"@sveltejs/vite-plugin-svelte": "3.0.0",
 		"@tanstack/svelte-virtual": "3.0.1",
