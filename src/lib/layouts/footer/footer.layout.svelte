@@ -3,6 +3,7 @@
 	import { HoverCardCreator } from '$lib/layouts';
 	import type { TCreator } from '$lib/ts';
 
+	const year = new Date().getFullYear();
 	const creator: TCreator = {
 		name: 'Gustavo Morinaga',
 		username: 'gustavomorinaga',
@@ -33,7 +34,7 @@
 				<HoverCardCreator {creator} />
 			</HoverCard.Content>
 		</HoverCard.Root>
-		© 2023
+		© {year}
 	</div>
 </footer>
 
